@@ -99,6 +99,7 @@
 	
 		table.style1
 		{
+			border:1;
 			width: 100%;
 		}
 		
@@ -114,7 +115,7 @@
 			
 			table.style1 th
 			{
-				text-align: left;
+				text-align: center;
 				font-weight: 400;
 				padding: 0.5em 1em 0.5em 1em;
 			}
