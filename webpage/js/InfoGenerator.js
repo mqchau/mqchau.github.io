@@ -17,25 +17,29 @@ function parseDatabase(request, budget)
     
     criteria = [];
     prices = [];
+    for(var i = 0; i<prices.length;i++)
+    {
+      prices[i] = Math.floor(prices[i]*100);
+    }
     
     for(var item in restaurant)
     {
       itemList.push(item);
       
       if(request == "calories")
-        criteria.push(restaurant[item].calories);
+        criteria.push(restaurant[item]["calories"]);
       else if(request == "fat")
-        criteria.push(restaurant[item].fat);
+        criteria.push(restaurant[item]["fat"]);
       else if(request == "protein")
-        criteria.push(restaurant[item].protein);
+        criteria.push(restaurant[item]["protein"]);
       else if(request == "carbs")
-        criteria.push(restaurant[item].carbs);
+        criteria.push(restaurant[item]["carbs"]);
       else if(request == "sodium")
-        criteria.push(restaurant[item].sodium);
+        criteria.push(restaurant[item]["sodium"]);
       
-      prices.push(restaurant[item].price);
+      prices.push(restaurant[item]["price"]);
     }
-    
+    budget = Math.floor(budget*100);
     var result = knapsack(criteria, prices, budget);
     
     for(var index in result)
