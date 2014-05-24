@@ -1,6 +1,6 @@
 function parseDatabase(request, budget)
 {
-  var json_file = 
+  var json_file = RestaurantDatabase;
   var restaurantList = [];
   var itemList = [];
 
@@ -43,12 +43,23 @@ function parseDatabase(request, budget)
       sum += prices[index];
       resultItemList.push(itemList[index]);
       
-      sumCalories += restaurant[itemList[index]].["calories"];
-      sumFat += restaurant[itemList[index]].["fat"];
-      sumProtein += restaurant[itemList[index]].["protein"];
-      sumCarbs += restaurant[itemList[index]].["protein"];
-      sumSodium += restaurant[itemList[index]].["sodium"];
+      sumCalories += restaurant[itemList[index]]["calories"];
+      sumFat += restaurant[itemList[index]]["fat"];
+      sumProtein += restaurant[itemList[index]]["protein"];
+      sumCarbs += restaurant[itemList[index]]["protein"];
+      sumSodium += restaurant[itemList[index]]["sodium"];
     }
+	
+	
+	sessionStorage.setItem("sumCalories", sumCalories);
+	sessionStorage.setItem("sumFat", sumFat);
+	sessionStorage.setItem("sumProtein", sumProtein);
+	sessionStorage.setItem("sumCarbs", sumCarbs);
+	sessionStorage.setItem("sumSodium", sumSodium);
+	
+	sessionStorage.setItem("sumPrice", sumPrice);
+	sessionStorage.setItem("resultItemList", resultItemList);
+	
   }
 }
   

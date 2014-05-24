@@ -17,6 +17,8 @@
 		<script src="js/config.js"></script>
 		<script src="js/skel.min.js"></script>
 		<script src="js/WebEngine.js"></script>
+		<script src="js/FastFoodRunner.js"></script>
+		<script src="js/InfoGenerator.js"></script>
 		<script src="database/restaurantdatabase.js"></script>
 		<!-- <script src="js/skel-panels.min.js"></script> -->
 		<noscript>
@@ -72,11 +74,11 @@
 										<div class="4u" align="center">
 											<section>
 												<h3 class="fa fa-nothing">Maximize this.</h3>
-												<select style="width:130px;height:35px;">
-													  <option value="calorie">Calorie</option>
+												<select style="width:130px;height:35px;" id="Criteria">
+													  <option value="calories">Calorie</option>
 													  <option value="fat">Fat amount</option>
 													  <option value="protein">Protein</option>
-													  <option value="carb">Carb</option>
+													  <option value="carbs">Carb</option>
 													  <option value="sodium">Sodium</option>
 													</select>
 											</section>
@@ -85,14 +87,14 @@
 											<section>
 												<h3 class="fa fa-nothing" align="center" >With this.</h3>
 												<div align="center">
-												<input type="text" id="budget" align="center">
+												<input type="text" id="budget" align="center" value="10.00">
 												</div>
 											</section>
 										</div>
 										
 										<div class="4u">
 											<div align="center">
-												<a href="#" class="button button-style3 button-big" onclick="loadResultPage()">Do it.</a>
+												<a href="#" class="button button-style3 button-big" onclick="doCalculation()">Do it.</a>
 											</div>
 										</div>
 										

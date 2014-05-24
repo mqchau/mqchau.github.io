@@ -33,6 +33,16 @@ function AllInitialize(){
 
 }
 
+function doCalculation(){
+	//get the selection and money
+	var selection = document.getElementById("Criteria").value;
+	var budget = parseFloat(document.getElementById("budget").value);	
+	
+	if (budget > 200.0) budget = 200.0;
+	
+	parseDatabase(selection, budget);
+}
+
 function loadJSON(file_name){
 	
 	return RestaurantDatabase;
