@@ -41,15 +41,11 @@ function parseDatabase(request, budget)
       prices.push(json_file[restaurant][item]["price"]);
     }
     budget = Math.floor(budget*100);
-<<<<<<< HEAD
-    var result[restaurant] = knapsack(criteria, prices, budget);
-=======
     for(var i = 0; i<prices.length;i++)
     {
       prices[i] = Math.floor(prices[i]*100);
     }
-    var result = knapsack(criteria, prices, budget);
->>>>>>> FETCH_HEAD
+    var result[restaurant]= knapsack(criteria, prices, budget);
     
     for(var index in result[restaurant])
     {
