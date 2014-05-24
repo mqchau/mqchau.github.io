@@ -25,6 +25,7 @@
 	{
 		font-family: 'Source Sans Pro', sans-serif;
 		font-weight: 400;
+		
 		color: #919499;
 	}
 
@@ -316,6 +317,7 @@
 		text-align: center;
 		text-transform: uppercase;
 		font-weight: 700;
+		font-size: 1.2em;
 		letter-spacing: 0.25em;
 		text-decoration: none;
 		/*border-radius: 0.35em;*/
@@ -478,7 +480,7 @@
 			-webkit-font-smoothing:antialiased;
 			-moz-osx-font-smoothing:grayscale;
 		}
-		.fa-nothing{}
+		.fa-nothing{font-size:1.2em;}
 		.fa-lg{font-size:1.3333333333333333em;line-height:.75em;vertical-align:-15%}
 		.fa-2x{font-size:2em}
 		.fa-3x{font-size:3em}
