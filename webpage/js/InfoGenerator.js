@@ -22,41 +22,45 @@ function parseDatabase(request, budget)
     
     criteria = [];
     prices = [];
-    for(var i = 0; i<prices.length;i++)
-    {
-      prices[i] = Math.floor(prices[i]*100);
-    }
-    
-    for(var item in restaurant)
+        
+    for(var item in json_file[restaurant])
     {
       itemList.push(item);
       
       if(request == "calories")
-        criteria.push(restaurant[item]["calories"]);
+        criteria.push(json_file[restaurant][item]["calories"]);
       else if(request == "fat")
-        criteria.push(restaurant[item]["fat"]);
+        criteria.push(json_file[restaurant][item]["fat"]);
       else if(request == "protein")
-        criteria.push(restaurant[item]["protein"]);
+        criteria.push(json_file[restaurant][item]["protein"]);
       else if(request == "carbs")
-        criteria.push(restaurant[item]["carbs"]);
+        criteria.push(json_file[restaurant][item]["carbs"]);
       else if(request == "sodium")
-        criteria.push(restaurant[item]["sodium"]);
+        criteria.push(json_file[restaurant][item]["sodium"]);
       
-      prices.push(restaurant[item]["price"]);
+      prices.push(json_file[restaurant][item]["price"]);
     }
     budget = Math.floor(budget*100);
+<<<<<<< HEAD
     var result[restaurant] = knapsack(criteria, prices, budget);
+=======
+    for(var i = 0; i<prices.length;i++)
+    {
+      prices[i] = Math.floor(prices[i]*100);
+    }
+    var result = knapsack(criteria, prices, budget);
+>>>>>>> FETCH_HEAD
     
     for(var index in result[restaurant])
     {
       sum += prices[index];
       resultItemList.push(itemList[index]);
       
-      sumCalories += restaurant[itemList[index]]["calories"];
-      sumFat += restaurant[itemList[index]]["fat"];
-      sumProtein += restaurant[itemList[index]]["protein"];
-      sumCarbs += restaurant[itemList[index]]["protein"];
-      sumSodium += restaurant[itemList[index]]["sodium"];
+      sumCalories += json_file[restaurant][itemList[index]]["calories"];
+      sumFat += json_file[restaurant][itemList[index]]["fat"];
+      sumProtein += json_file[restaurant][itemList[index]]["protein"];
+      sumCarbs += json_file[restaurant][itemList[index]]["protein"];
+      sumSodium += json_file[restaurant][itemList[index]]["sodium"];
     }
 	
 	if(sum > max)
