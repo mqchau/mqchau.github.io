@@ -27,10 +27,26 @@ function initialize() {
     }, function() {
       handleNoGeolocation(true);
     });
+    getPlaces(pos);
   } else {
     // Browser doesn't support Geolocation
     handleNoGeolocation(false);
   }
+}
+
+function getPlaces(currentlatlng) {
+    userLoc = currentlatlng, homeMarker = new google.maps.Marker({
+        map: map,
+        animation: google.maps.Animation.DROP,
+        position: currentlatlng,
+        icon: homeIcon
+    });
+    var requestBar = {
+        location: currentlatlng,
+        radius: 1e3,
+        keyword: "restaurant"
+    };
+    service.search(requestBar, storeRequestBar)
 }
 
 function handleNoGeolocation(errorFlag) {
