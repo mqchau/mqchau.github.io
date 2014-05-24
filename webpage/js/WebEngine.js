@@ -79,7 +79,7 @@ function doCalculation(){
 	
 	if (budget > 200.0) budget = 200.0;
 	
-	//parseDatabase(selection, budget);			//we're supposed to call it
+	parseDatabase(selection, budget);			//we're supposed to call it
 	
 	sessionStorage.setItem("sumCalories", 2000);
 	sessionStorage.setItem("sumFat", 12);
