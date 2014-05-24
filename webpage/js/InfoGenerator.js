@@ -51,7 +51,13 @@ function parseDatabase(request, budget)
     }
 	
 	
-	sessionStorage.setItem("sumCalories", sumCalories);
+	
+	
+  }
+  
+  
+  
+  sessionStorage.setItem("sumCalories", sumCalories);
 	sessionStorage.setItem("sumFat", sumFat);
 	sessionStorage.setItem("sumProtein", sumProtein);
 	sessionStorage.setItem("sumCarbs", sumCarbs);
@@ -59,8 +65,6 @@ function parseDatabase(request, budget)
 	
 	sessionStorage.setItem("sumPrice", sumPrice);
 	sessionStorage.setItem("resultItemList", resultItemList);
-	
-  }
 }
   
 
