@@ -1,4 +1,4 @@
-function debugFunction1(){
+/*function debugFunction1(){
 	
 	
 	//do what ever you want
@@ -15,10 +15,9 @@ function debugFunction1(){
 	var optimalSubset = getOptimalSubset(matrix, weights);
 	
 	//write a string to text area
-	clearDebugMsg();
 	debugMsgConcat("The optimal set of items to take: {" + optimalSubset + "}\n"
 				+ "The total value of these items: " + matrix[weights.length][capacity])
-}
+}*/
 
 //values = cal, weights = cost, capacity = price limit
 function knapsack(values, weights, capacity)
@@ -31,10 +30,6 @@ function knapsack(values, weights, capacity)
 	var matrix = getSolutionMatrix(values, weights, capacity);
 	var optimalSubset = getOptimalSubset(matrix, weights);
 	
-	//write a string to text area
-	clearDebugMsg();
-	debugMsgConcat("The optimal set of items to take: {" + optimalSubset + "}\n"
-				+ "The total value of these items: " + matrix[weights.length][capacity])
 	return optimalSubset;
 }
 
@@ -42,9 +37,6 @@ function debugMsgConcat(new_msg){
 	document.getElementById('debug').value += new_msg;
 }
 
-function clearDebugMsg(){
-	document.getElementById('debug').value = "";
-}
 
 function getSolutionMatrix(itemValues, weights, capacity) {
 		var matrix =  new Array(itemValues.length + 1);

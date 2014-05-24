@@ -14,7 +14,7 @@ function parseDatabase(request, budget)
   var sumFat = 0;
   var sumProtein = 0;
   var sumCarbs = 0;
-  var sumsodium = 0;
+  var sumSodium = 0;
   
   for(var restaurant in json_file)
   {
@@ -45,7 +45,7 @@ function parseDatabase(request, budget)
     {
       prices[i] = Math.floor(prices[i]*100);
     }
-    var result[restaurant]= knapsack(criteria, prices, budget);
+    result[restaurant]= knapsack(criteria, prices, budget);
     
     for(var index in result[restaurant])
     {
