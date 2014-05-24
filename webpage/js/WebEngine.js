@@ -24,3 +24,17 @@ function populateResultPage(){
 	document.getElementById("restaurant_name").innerHTML = sessionStorage.getItem("restaurant_name");
 	
 }
+
+function AllInitialize(){
+	//load json file
+	var restaurant_database = loadJSON("database/example_data.json");
+	//save it to sessionStorage
+	sessionStorage.setItem("restaurant_database", restaurant_database);
+
+}
+
+function loadJSON(file_name){
+	
+	return RestaurantDatabase;
+	//return JSON.parse(file_name);
+}
