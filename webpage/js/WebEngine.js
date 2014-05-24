@@ -3,8 +3,6 @@
   // setter creator void setItem(in DOMString key, in any data);
 // };
 
-var resultItemList;
-
 function supports_html5_storage() {
   try {
     return 'localStorage' in window && window['localStorage'] !== null;
@@ -57,11 +55,21 @@ function populateResultPage(){
 	for (var item in itemList){
 		var list = document.getElementById("OrderItems");
 		var temp = document.createElement('li');
-		temp.appendChild(document.createTextNode(item));
+		temp.appendChild(document.createTextNode(itemList[item]));
 		list.appendChild(temp);
 		
 	}
 	
+	
+	//the nutritions
+	document.getElementById("ProteinDisplay").innerHTML = sessionStorage.getItem("sumProtein");
+	document.getElementById("CarbDisplay").innerHTML = sessionStorage.getItem("sumCarbs");
+	document.getElementById("CaloriesDisplay").innerHTML = sessionStorage.getItem("sumCalories");
+	document.getElementById("SodiumDisplay").innerHTML = sessionStorage.getItem("sumSodium");
+	document.getElementById("FatDisplay").innerHTML = sessionStorage.getItem("sumFat");
+	
+	//the price
+	document.getElementById("PriceDisplay").innerHTML = sessionStorage.getItem("sumPrice");
 }
 
 function AllInitialize(){
@@ -79,7 +87,7 @@ function doCalculation(){
 	
 	if (budget > 200.0) budget = 200.0;
 	
-	parseDatabase(selection, budget);			//we're supposed to call it
+	//parseDatabase(selection, budget);			//we're supposed to call it
 	
 	sessionStorage.setItem("sumCalories", 2000);
 	sessionStorage.setItem("sumFat", 12);
@@ -88,8 +96,7 @@ function doCalculation(){
 	sessionStorage.setItem("sumSodium", 89);
 	
 	sessionStorage.setItem("sumPrice", 586);
-	var abc = ["Saab", "Volvo", "BMW"];
-	resultItemList = abc;
+	var abc = ["Cheeseburger", "Hamburger", "Onion ring"];
 	sessionStorage.setItem("resultItemList",abc );
 	sessionStorage.setItem("bestRestaurant", "Carl's Jr");
 	
