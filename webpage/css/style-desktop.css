@@ -261,13 +261,13 @@
 
 		.wrapper .title
 		{
-			font-size: 0.9em;
-			width: 25em;
+			font-size: 1.1em;
+			width: 20em;
 			height: 3.25em;
 			top: -3.25em;
 			line-height: 3.25em;
 			margin-bottom: -3.25em;
-			margin-left: -12.5em;
+			margin-left: -10em;
 			padding-top: 0.5em;
 		}
 
@@ -463,7 +463,7 @@
 		
 		#intro .style2
 		{
-			font-size: 2.75em;
+			font-size: 3.75em;
 			letter-spacing: 0.075em;
 			line-height: 1.35em;
 			padding: 0em 0 0em 0;
