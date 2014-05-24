@@ -1,12 +1,9 @@
 @charset 'UTF-8';
 
 @font-face{font-family:'FontAwesome';src:url('font/fontawesome-webfont.eot?v=4.0.1');src:url('font/fontawesome-webfont.eot?#iefix&v=4.0.1') format('embedded-opentype'),url('font/fontawesome-webfont.woff?v=4.0.1') format('woff'),url('font/fontawesome-webfont.ttf?v=4.0.1') format('truetype'),url('font/fontawesome-webfont.svg?v=4.0.1#fontawesomeregular') format('svg');font-weight:normal;font-style:normal}
+@font-face{font-family:'BebasNeue'; src:url('font/BebasNeue.eot?v=4.0.1'); src:url('font/BebasNeue.eot?#iefix&v=4.0.1') format('embedded-opentype'), url('font/BebasNeue.woff?v=4.0.1') format('woff'),url('font/BebasNeue.ttf?v=4.0.1') format('truetype'),url('font/BebasNeue.svg?v=4.0.1#BebasNeue') format('svg');font-weight:normal;font-style:normal}
 
-/*
-	Escape Velocity 2.5 by HTML5 UP
-	html5up.net | @n33co
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
-*/
+ /* format('embedded-opentype'); */
 
 /*********************************************************************************/
 /* Basic                                                                         */
@@ -23,7 +20,7 @@
 
 	body, input, textarea, select
 	{
-		font-family: 'Source Sans Pro', sans-serif;
+		font-family: 'BebasNeue', sans-serif;
 		font-weight: 400;
 		
 		color: #919499;
