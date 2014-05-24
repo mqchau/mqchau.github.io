@@ -43,10 +43,18 @@ function populateResultPage(){
 	//set restaurant icon
 	setRestaurantIcon(sessionStorage.getItem("bestRestaurant"));
 	
+	//clear order item
+	var curr_list = document.getElementById("OrderItems");
+	curr_list.innerHTML = '';
+	
 	//set order items
 	var itemList = 	sessionStorage.getItem("resultItemList");
 	
 	for (var item in itemList){
+		var list = document.getElementById("OrderItems");
+		var temp = document.createElement('li');
+		temp.appendChild(document.createTextNode("a"));
+		list.appendChild(temp);
 		
 	}
 	
@@ -76,7 +84,9 @@ function doCalculation(){
 	sessionStorage.setItem("sumSodium", 89);
 	
 	sessionStorage.setItem("sumPrice", 586);
-	sessionStorage.setItem("resultItemList", ["hamburger", "cheeseburger"]);
+	var abc = [];
+	
+	sessionStorage.setItem("resultItemList",abc );
 	sessionStorage.setItem("bestRestaurant", "Carl's Jr");
 	
 	loadResultPage();
