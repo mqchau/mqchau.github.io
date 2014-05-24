@@ -3,6 +3,11 @@ function parseDatabase(request, budget)
   var json_file = RestaurantDatabase;
   var restaurantList = [];
   var itemList = [];
+  var resultItemList = [];
+  var result = [];
+
+  var maxIndex = 0;
+  var max = 0;
 
   var sum = 0;
   var sumCalories = 0;
@@ -40,9 +45,9 @@ function parseDatabase(request, budget)
       prices.push(restaurant[item]["price"]);
     }
     budget = Math.floor(budget*100);
-    var result = knapsack(criteria, prices, budget);
+    var result[restaurant] = knapsack(criteria, prices, budget);
     
-    for(var index in result)
+    for(var index in result[restaurant])
     {
       sum += prices[index];
       resultItemList.push(itemList[index]);
@@ -54,22 +59,32 @@ function parseDatabase(request, budget)
       sumSodium += restaurant[itemList[index]]["sodium"];
     }
 	
-	
-	
-	
+	if(sum > max)
+      maxIndex = restaurant;	
+  }
+  
+  for(var index in result[maxIndex])
+  {
+    sum += prices[index];
+    resultItemList.push(itemList[index]);
+    
+    sumCalories += restaurant[itemList[index]]["calories"];
+    sumFat += restaurant[itemList[index]]["fat"];
+    sumProtein += restaurant[itemList[index]]["protein"];
+    sumCarbs += restaurant[itemList[index]]["protein"];
+    sumSodium += restaurant[itemList[index]]["sodium"];
   }
   
   
-  
   sessionStorage.setItem("sumCalories", sumCalories);
-	sessionStorage.setItem("sumFat", sumFat);
-	sessionStorage.setItem("sumProtein", sumProtein);
-	sessionStorage.setItem("sumCarbs", sumCarbs);
-	sessionStorage.setItem("sumSodium", sumSodium);
+  sessionStorage.setItem("sumFat", sumFat);
+  sessionStorage.setItem("sumProtein", sumProtein);
+  sessionStorage.setItem("sumCarbs", sumCarbs);
+  sessionStorage.setItem("sumSodium", sumSodium);
 	
-	sessionStorage.setItem("sumPrice", sumPrice);
-	sessionStorage.setItem("resultItemList", resultItemList);
-	sessionStorage.setItem("bestRestaurant", restaurantList[0]);		//just for testing purpose. MUST CHANGE
+  sessionStorage.setItem("sumPrice", sum);
+  sessionStorage.setItem("resultItemList", resultItemList);
+  sessionStorage.setItem("bestRestaurant", restaurantList[maxIndex]);		//just for testing purpose. MUST CHANGE
 }
   
 
