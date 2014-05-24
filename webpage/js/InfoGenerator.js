@@ -13,7 +13,7 @@ function parseDatabase(request, budget)
   
   for(var restaurant in json_file)
   {
-    restaruantList.push(json_file[restaruant]);
+    restaurantList.push(restaurant);
     
     criteria = [];
     prices = [];
@@ -65,6 +65,7 @@ function parseDatabase(request, budget)
 	
 	sessionStorage.setItem("sumPrice", sumPrice);
 	sessionStorage.setItem("resultItemList", resultItemList);
+	sessionStorage.setItem("bestRestaurant", restaurantList[0]);		//just for testing purpose. MUST CHANGE
 }
   
 
