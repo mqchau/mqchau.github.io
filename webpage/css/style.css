@@ -318,15 +318,15 @@
 		font-weight: 700;
 		letter-spacing: 0.25em;
 		text-decoration: none;
-		border-radius: 0.35em;
+		/*border-radius: 0.35em;*/
 		border: 0;
 		outline: 0;
 		cursor: pointer;
-		-moz-transition: all .25s ease-in-out;
+		/*-moz-transition: all .25s ease-in-out;
 		-webkit-transition: all .25s ease-in-out;
 		-o-transition: all .25s ease-in-out;
 		-ms-transition: all .25s ease-in-out;
-		transition: all .25s ease-in-out;
+		transition: all .25s ease-in-out;*/
 	}
 
 		.button-style1
@@ -377,7 +377,8 @@
 			{
 				background-color: #1f232b;
 			}
-
+			
+		
 	ul.style1
 	{
 	}
@@ -1201,3 +1202,5 @@
 				{
 					color: #fff;
 				}
+				
+		
