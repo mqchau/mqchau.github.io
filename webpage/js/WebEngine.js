@@ -3,6 +3,8 @@
   // setter creator void setItem(in DOMString key, in any data);
 // };
 
+var resultItemList;
+
 function supports_html5_storage() {
   try {
     return 'localStorage' in window && window['localStorage'] !== null;
@@ -48,12 +50,14 @@ function populateResultPage(){
 	curr_list.innerHTML = '';
 	
 	//set order items
-	var itemList = 	sessionStorage.getItem("resultItemList");
+	var itemListRaw = 	(sessionStorage.getItem("resultItemList"));
+	var itemList = itemListRaw.split(",");
+	
 	
 	for (var item in itemList){
 		var list = document.getElementById("OrderItems");
 		var temp = document.createElement('li');
-		temp.appendChild(document.createTextNode("a"));
+		temp.appendChild(document.createTextNode(item));
 		list.appendChild(temp);
 		
 	}
@@ -84,8 +88,8 @@ function doCalculation(){
 	sessionStorage.setItem("sumSodium", 89);
 	
 	sessionStorage.setItem("sumPrice", 586);
-	var abc = [];
-	
+	var abc = ["Saab", "Volvo", "BMW"];
+	resultItemList = abc;
 	sessionStorage.setItem("resultItemList",abc );
 	sessionStorage.setItem("bestRestaurant", "Carl's Jr");
 	
