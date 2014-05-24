@@ -33,10 +33,10 @@ function parseDatabase(request, budget)
       else if(request == "sodium")
         criteria.push(restaurant[item].sodium);
       
-      prices.push(restaruant[item].price);
+      prices.push(restaurant[item].price);
     }
     
-    var result = knapsack(criteria, price, budget);
+    var result = knapsack(criteria, prices, budget);
     
     for(var index in result)
     {

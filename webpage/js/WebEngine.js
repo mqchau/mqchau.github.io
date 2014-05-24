@@ -21,7 +21,12 @@ function loadResultPage(){
 function populateResultPage(){
 
 	//alert(localStorage.getItem("item1"));
-	document.getElementById("restaurant_name").innerHTML = sessionStorage.getItem("restaurant_name");
+	document.getElementById("restaurant_name").innerHTML = sessionStorage.getItem("bestRestaurant");
+	
+	//set restaurant icon
+	//setRestaurantIcon(sessionStorage.getItem("bestRestaurant"));
+	
+	//set
 	
 }
 
