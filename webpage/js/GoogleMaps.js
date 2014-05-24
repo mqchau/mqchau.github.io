@@ -1,19 +1,3 @@
-
-<html>
-<head>
-	<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    <meta charset="utf-8">
-    <style>
-      html, body, #map-canvas {
-        height: 100%;
-        margin: 0px;
-        padding: 0px
-      }
-    </style>
-	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script>
-	<script src="js/FastFoodRunner.js"></script>
-	<!--<script src="js/GoogleMaps.js"></script>-->
-    <script>
 // Note: This example requires that you consent to location sharing when
 // prompted by your browser. If you see a blank space instead of the map, this
 // is probably because you have denied permission for location sharing.
@@ -67,21 +51,3 @@ function handleNoGeolocation(errorFlag) {
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
-
-    </script>
-</head>
-
-<body>
-	
-	<button type="button" onclick="debugFunction1()" >Debug Function 1</button>
-	<button type="button" onclick="initialize()" >Debug Function 2</button>
-	
-	<br>
-
-	<textarea rows="4" cols="50" id="debug">This window is for debug purpose only</textarea>
-
-    <div id="map-canvas" style="height:500px; width:400px;"></div>
-
-</body>
-
-</html>
