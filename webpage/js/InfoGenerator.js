@@ -65,7 +65,7 @@ function parseDatabase(request, budget)
 	 
     }
 	
-	alert(result + "                    " + sum + "    " + restaurant);
+	//alert(result + "                    " + sum + "    " + restaurant);
 	if(sum > max )
 	{
       max = sum;
