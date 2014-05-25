@@ -45,6 +45,8 @@ function setRestaurantIcon(name){
 		document.getElementById("restaurant_logo").src="images/restaurant_logo/Subway-Logo.png";
 	} else 	if (name == "Mc Donalds"){
 		document.getElementById("restaurant_logo").src="images/restaurant_logo/Mcdonalds-Logo.png";
+	} else if (name == "KFC"){
+		document.getElementById("restaurant_logo").src="images/restaurant_logo/KFC.png";
 	}
 	
 }
@@ -309,14 +311,20 @@ function AllInitialize(){
 
 function doCalculation(){
 	//get the selection and money
-	var selection = document.getElementById("Criteria").value;
-	var budget = parseFloat(document.getElementById("budget").value);	
-	
-	if (budget > 200.0) budget = 200.0;
-	
-	parseDatabase(selection, budget);			//we're supposed to call it
-	
-	loadResultPage();
+	try {
+		var selection = document.getElementById("Criteria").value;
+		var budget = parseFloat(document.getElementById("budget").value);	
+		
+		if (budget > 200.0) budget = 200.0;
+		else if (budget >= 1.00){ 
+		
+			parseDatabase(selection, budget);			//we're supposed to call it
+			
+			loadResultPage();
+		}
+	} catch (err){
+		
+	}
 }
 
 function loadJSON(file_name){
