@@ -10,7 +10,10 @@ var directionsService = new google.maps.DirectionsService();
 var map;
 var infoWindow;
 var service;
+//var target_location;
+var target_address;
 
+//var geocoder = new google.maps.Geocoder();
 var current_lat = 33.683947;
 var current_long = -117.7946941;
 
@@ -48,7 +51,7 @@ function setRestaurantIcon(name){
 
 
 function performSearch(new_bound, new_keyword) {
-	alert(new_bound);
+	//alert(new_bound);
 	var request = {
 	bounds: new_bound,
 	keyword: new_keyword
@@ -83,15 +86,35 @@ function createMarker(place) {
 			}
 		  });
 
+		  service.getDetails(place, function(result, status) {
+			  if (status != google.maps.places.PlacesServiceStatus.OK) {
+				alert(status);
+				return;
+			  }
+			  //alert("1   "+ result.formatted_address);
+			  
+			  calcRoute(result.geometry.location);
+			  //codeAddress(result.formatted_address);
+			}
+		)
+		  
 		  google.maps.event.addListener(marker, 'click', function() {
 			service.getDetails(place, function(result, status) {
 			  if (status != google.maps.places.PlacesServiceStatus.OK) {
 				alert(status);
 				return;
 			  }
-			  infoWindow.setContent(result.name);
+				//sessionStorage.setItem("target_address", result.formatted_address);
+				//target_address = result.formatted_address;
 			  infoWindow.setContent("<b>" + result.name + "</b><br>" + result.formatted_address);
 			  infoWindow.open(map, marker);
+			  
+			  
+			  //routing
+				
+				
+				
+				
 			});
 		  });
 		}
@@ -196,23 +219,39 @@ function populateResultPage(){
 	//perform the search
 	performSearch(bounds, sessionStorage.getItem("bestRestaurant"));
 	
-	//display address
 	
 	
-	//routing
-	
-	
-	//zoom map there
 	
 	
 	
 }
 
-function calcRoute() {
+
+
+  function codeAddress(address) {
+    //In this case it gets the address from an element on the page, but obviously you  could just pass it to the method instead
+  var   geocoder = new google.maps.Geocoder();
+
+  alert(address);
+    geocoder.geocode( { 'address': address}, function(results, status){
+		if (status == google.maps.GeocoderStatus.OK) {
+			target_location = results.location;
+			alert(results.location);
+			//sessionStorage.setItem("target_coord", results.location);
+			//calcRoute(target_location	);
+      } else {
+        alert("Geocode was not successful for " + address + " bc of the following reason: " + status);
+      }
+	
+	});
+	
+  }
+
+function calcRoute(target_location) {
 
   var request = {
     origin: 'Los Angeles, CA',
-    destination: 'Sacramento, CA',
+    destination: target_location,
    // waypoints:[{location: 'Bourke, NSW'}, {location: 'Broken Hill, NSW'}],
     travelMode: google.maps.TravelMode.WALKING
   };
