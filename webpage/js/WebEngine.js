@@ -90,6 +90,7 @@ function createMarker(place) {
 				return;
 			  }
 			  infoWindow.setContent(result.name);
+			  infoWindow.setContent("<b>" + result.name + "</b><br>" + result.formatted_address);
 			  infoWindow.open(map, marker);
 			});
 		  });
