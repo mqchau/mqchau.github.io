@@ -133,9 +133,11 @@ function initialize() {
 
 //distance of how far you should walk to burn off the calculated calories
 function degree(calories) {
+	var R = 6371;                 // km
 	var dist = calories / 72.61; //miles
 	dist = dist * 1.61;          //kilometers
-	var degree = Math.asin(2/dist)
+	var degree = dist/R;
+	degree = 180/Math.PI * degree / 4;
 	return degree;
 }		
 		
@@ -179,8 +181,8 @@ function populateResultPage(){
 	
 	//adjust the map
 	//calculate the target coordinate
-	var lat_displacement = 0.10;
-	var long_displacement = 0.10;
+	var lat_displacement = degree(sessionStorage.getItem("sumCalories")); //0.10;
+	var long_displacement = degree(sessionStorage.getItem("sumCalories")); 
 	var new_lat_low = current_lat - lat_displacement;
 	var new_lat_high = current_lat + lat_displacement;
 	var new_long_low = current_long - long_displacement;
