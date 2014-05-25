@@ -5,7 +5,7 @@ import json
 BigDict = dict();
 
 def main():
-    csvfiletoread = ['McDonalds List.csv','Carl\'s Jr.csv','In-N-Out.csv','Taco Bell.csv','BurgerKing.csv','Subway.csv']
+    csvfiletoread = ['McDonalds List.csv','Carl\'s Jr.csv','In-N-Out.csv','Taco Bell.csv','BurgerKing.csv','Subway.csv', 'KFC.csv']
     for i in csvfiletoread[:]:
         csvfile = open(i, 'r')
         spamreader = csv.reader(csvfile, delimiter=',', quotechar='|')
