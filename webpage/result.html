@@ -10,6 +10,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="description" content="" />
 		<meta name="keywords" content="" />
+		  <script src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=places,visualization&v=3.exp"></script>
 		<link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400italic,700,900" rel="stylesheet" />
 		<!--[if lte IE 8]><script src="js/html5shiv.js"></script><link rel="stylesheet" href="css/ie8.css" /><![endif]-->
 		<script src="js/jquery.min.js"></script>
@@ -17,7 +18,7 @@
 		<script src="js/config.js"></script>
 		<script src="js/skel.min.js"></script>
 		<script src="js/WebEngine.js"></script>
-		  <script src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=places,visualization&v=3.exp"></script>
+		
 		<!-- <script src="js/skel-panels.min.js"></script> -->
 		<noscript>
 			<link rel="stylesheet" href="css/skel-noscript.css" />
@@ -27,88 +28,13 @@
 		</noscript>
 		
 		<script>
-		var map;
-		var infoWindow;
-		var service;
-
-		function initialize() {
-		  map = new google.maps.Map(document.getElementById('map-canvas'), {
-			//find the current latitude, longtitude
-			
-			//set them to center of the map		  
-			center: new google.maps.LatLng(33.683947 , -117.7946941),
-			zoom: 12,
-			styles: [
-			  {
-				stylers: [
-				  { visibility: 'simplified' }
-				]
-			  },
-			  {
-				elementType: 'labels',
-				stylers: [
-				  { visibility: 'off' }
-				]
-			  }
-			]
-		  });
-
-		  infoWindow = new google.maps.InfoWindow();
-		  service = new google.maps.places.PlacesService(map);
-
-		  google.maps.event.addListenerOnce(map, 'bounds_changed', performSearch);
-		}
+		
 
 		
-		function performSearch() {
-			//alert(map.getBounds());
-		  var request = {
-			bounds: map.getBounds(),
-			keyword: 'In N Out'
-		  };
-		  service.radarSearch(request, callback);
-		}
 
-		function callback(results, status) {
-		  if (status != google.maps.places.PlacesServiceStatus.OK) {
-			
-			return;
-		  }
-		  
-		  createMarker(results[results.length -1]);
-		  /*for (var i = 0, result; result = results[i]; i++) {
-			createMarker(result);
-		  } */
-		}
-
-		function createMarker(place) {
-		  var marker = new google.maps.Marker({
-			map: map,
-			position: place.geometry.location,
-			icon: {
-			  // Star
-			  path: 'M 0,-24 6,-7 24,-7 10,4 15,21 0,11 -15,21 -10,4 -24,-7 -6,-7 z',
-			  fillColor: '#ffff00',
-			  fillOpacity: 1,
-			  scale: 1/4,
-			  strokeColor: '#bd8d2c',
-			  strokeWeight: 1
-			}
-		  });
-
-		  google.maps.event.addListener(marker, 'click', function() {
-			service.getDetails(place, function(result, status) {
-			  if (status != google.maps.places.PlacesServiceStatus.OK) {
-				alert(status);
-				return;
-			  }
-			  infoWindow.setContent(result.name);
-			  infoWindow.open(map, marker);
-			});
-		  });
-		}
-
-		google.maps.event.addDomListener(window, 'load', initialize);
+		
+	
+		//google.maps.event.addDomListener(window, 'load', initialize);
 
 		
 		
@@ -217,7 +143,10 @@
 					
 					<!-- start working with return button -->
 					<div class="row">
-						<div align="right" style="width:100%;">
+						<div class="8u" align="center" id="DistanceDisplay">
+							
+						</div>
+						<div class="1u" align="right" style="width:100%;">
 							<a href="#" class="button button-style3 button-big" onclick="reDoEverything()">Redo.</a>
 						</div>
 					</div>
@@ -229,7 +158,7 @@
 			
 				This project is coded in HackUCI 2014 by Calvin Lin, Brandon Trinh, Quan Chau, Raul Madrigal
 			
-		</div -->>
+		</div -->
 
 	
 
