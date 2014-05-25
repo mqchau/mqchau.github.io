@@ -30,37 +30,7 @@
 		<script>
 		
 
-		function initialize() {
-		  map = new google.maps.Map(document.getElementById('map-canvas'), {
-			//find the current latitude, longtitude
-			
-			//set them to center of the map		  
-			center: new google.maps.LatLng(33.683947 , -117.7946941),
-			zoom: 12,
-			styles: [
-			  {
-				stylers: [
-				  { visibility: 'simplified' }
-				]
-			  },
-			  {
-				elementType: 'labels',
-				stylers: [
-				  { visibility: 'off' }
-				]
-			  }
-			]
-		  });
-
-		  infoWindow = new google.maps.InfoWindow();
-		  service = new google.maps.places.PlacesService(map);
-
-		directionsDisplay.setMap(map);
-		directionsDisplay.setPanel(document.getElementById('directionsPanel'));
-		  
-		  
-		  calcRoute();
-		}
+		
 
 		
 	
@@ -185,7 +155,7 @@
 			
 				This project is coded in HackUCI 2014 by Calvin Lin, Brandon Trinh, Quan Chau, Raul Madrigal
 			
-		</div -->>
+		</div -->
 
 	
 

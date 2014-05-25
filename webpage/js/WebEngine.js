@@ -11,6 +11,9 @@ var map;
 var infoWindow;
 var service;
 
+var current_lat = 33.683947;
+var current_long = -117.7946941;
+
 function supports_html5_storage() {
   try {
     return 'localStorage' in window && window['localStorage'] !== null;
@@ -43,64 +46,12 @@ function setRestaurantIcon(name){
 	
 }
 
-function populateResultPage(){
 
-	//alert(localStorage.getItem("item1"));
-	document.getElementById("restaurant_name").innerHTML = sessionStorage.getItem("bestRestaurant");
-	
-	//set restaurant icon
-	setRestaurantIcon(sessionStorage.getItem("bestRestaurant"));
-	
-	//clear order item
-	var curr_list = document.getElementById("OrderItems");
-	curr_list.innerHTML = '';
-	
-	//set order items
-	var itemListRaw = 	(sessionStorage.getItem("resultItemList"));
-	var itemList = itemListRaw.split(",");
-	
-	
-	for (var item in itemList){
-		var list = document.getElementById("OrderItems");
-		var temp = document.createElement('li');
-		temp.appendChild(document.createTextNode(itemList[item]));
-		list.appendChild(temp);
-		
-	}
-	
-	
-	//the nutritions
-	document.getElementById("ProteinDisplay").innerHTML = sessionStorage.getItem("sumProtein") + " g";
-	document.getElementById("CarbDisplay").innerHTML = sessionStorage.getItem("sumCarbs") + " g";
-	document.getElementById("CaloriesDisplay").innerHTML = sessionStorage.getItem("sumCalories") + " g";
-	document.getElementById("SodiumDisplay").innerHTML = sessionStorage.getItem("sumSodium") + " mg";
-	document.getElementById("FatDisplay").innerHTML = sessionStorage.getItem("sumFat") + " g";
-	
-	//the price
-	document.getElementById("PriceDisplay").innerHTML = sessionStorage.getItem("sumPrice");
-	
-	//adjust the map
-	//calculate the target coordinate
-	
-	//perform the search
-	
-	//display address
-	
-	
-	//routing
-	
-	
-	//zoom map there
-	
-	
-	
-}
-
-function performSearch() {
-	//alert(map.getBounds());
+function performSearch(new_keyword) {
+	alert(map.getBounds());
 	var request = {
 	bounds: map.getBounds(),
-	keyword: 'In N Out'
+	keyword: new_keyword
 	};
 	service.radarSearch(request, callback);
 }
@@ -144,7 +95,108 @@ function createMarker(place) {
 		  });
 		}
 		
+
+
+function initialize() {
+		  map = new google.maps.Map(document.getElementById('map-canvas'), {
+			//find the current latitude, longtitude
+			
+			
+			//set them to center of the map		  
+			center: new google.maps.LatLng(current_lat, current_long),
+			zoom: 12,
+			styles: [
+			  {
+				stylers: [
+				  { visibility: 'simplified' }
+				]
+			  },
+			  {
+				elementType: 'labels',
+				stylers: [
+				  { visibility: 'off' }
+				]
+			  }
+			]
+		  });
+
+		  infoWindow = new google.maps.InfoWindow();
+		  service = new google.maps.places.PlacesService(map);
+
+		directionsDisplay.setMap(map);
+		directionsDisplay.setPanel(document.getElementById('directionsPanel'));
+		  
+		  
+		  //calcRoute();
+		}		
+
+function populateResultPage(){
+
+	initialize();
+
+	//alert(localStorage.getItem("item1"));
+	document.getElementById("restaurant_name").innerHTML = sessionStorage.getItem("bestRestaurant");
+	
+	//set restaurant icon
+	setRestaurantIcon(sessionStorage.getItem("bestRestaurant"));
+	
+	//clear order item
+	var curr_list = document.getElementById("OrderItems");
+	curr_list.innerHTML = '';
+	
+	//set order items
+	var itemListRaw = 	(sessionStorage.getItem("resultItemList"));
+	var itemList = itemListRaw.split(",");
+	
+	
+	for (var item in itemList){
+		var list = document.getElementById("OrderItems");
+		var temp = document.createElement('li');
+		temp.appendChild(document.createTextNode(itemList[item]));
+		list.appendChild(temp);
 		
+	}
+	
+	
+	//the nutritions
+	document.getElementById("ProteinDisplay").innerHTML = sessionStorage.getItem("sumProtein") + " g";
+	document.getElementById("CarbDisplay").innerHTML = sessionStorage.getItem("sumCarbs") + " g";
+	document.getElementById("CaloriesDisplay").innerHTML = sessionStorage.getItem("sumCalories") + " g";
+	document.getElementById("SodiumDisplay").innerHTML = sessionStorage.getItem("sumSodium") + " mg";
+	document.getElementById("FatDisplay").innerHTML = sessionStorage.getItem("sumFat") + " g";
+	
+	//the price
+	document.getElementById("PriceDisplay").innerHTML = sessionStorage.getItem("sumPrice");
+	
+	//adjust the map
+	//calculate the target coordinate
+	var lat_displacement = 0.10;
+	var long_displacement = 0.10;
+	var new_lat_low = current_lat - lat_displacement;
+	var new_lat_high = current_lat + lat_displacement;
+	var new_long_low = current_long - long_displacement;
+	var new_long_high = current_long + long_displacement;
+	var new_bound = "((" + new_lat_low + "," + new_long_low + "),(" + new_lat_high + "," + new_long_high +"))";
+	
+	//set new bound
+	var bounds = new google.maps.LatLngBounds( new google.maps.LatLng(new_lat_low,new_long_low ), new google.maps.LatLng(new_lat_high,new_long_high ));
+	mapmap.fitBounds(bounds);
+	
+	//perform the search
+	//performSearch(sessionStorage.getItem("bestRestaurant"));
+	
+	//display address
+	
+	
+	//routing
+	
+	
+	//zoom map there
+	
+	
+	
+}
+
 function calcRoute() {
 
   var request = {
@@ -156,6 +208,7 @@ function calcRoute() {
   directionsService.route(request, function(response, status) {
     if (status == google.maps.DirectionsStatus.OK) {
       directionsDisplay.setDirections(response);
+	 // alert(computeTotalDistance(response));
     }
   });
 }
@@ -166,8 +219,10 @@ function computeTotalDistance(result) {
   for (var i = 0; i < myroute.legs.length; i++) {
     total += myroute.legs[i].distance.value;
   }
-  total = total / 1000.0;
-  document.getElementById('total').innerHTML = total + ' km';
+  total = total / 1000.0 * 0.62;
+  total = Number(total.toFix(2));
+  return total;
+ // document.getElementById('total').innerHTML = total + ' km';
 }	
 
 
