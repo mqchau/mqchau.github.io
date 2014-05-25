@@ -103,7 +103,7 @@ function parseDatabase(request, budget)
   sessionStorage.setItem("sumCarbs", sumCarbs);
   sessionStorage.setItem("sumSodium", sumSodium);
 	
-  sessionStorage.setItem("sumPrice", sumPrice	);
+  sessionStorage.setItem("sumPrice", Number(sumPrice.toFixed(2))	);
   sessionStorage.setItem("resultItemList", maxItemList);
   sessionStorage.setItem("bestRestaurant", maxRestaurant);		//just for testing purpose. MUST CHANGE
   

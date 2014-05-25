@@ -62,11 +62,11 @@ function populateResultPage(){
 	
 	
 	//the nutritions
-	document.getElementById("ProteinDisplay").innerHTML = sessionStorage.getItem("sumProtein");
-	document.getElementById("CarbDisplay").innerHTML = sessionStorage.getItem("sumCarbs");
-	document.getElementById("CaloriesDisplay").innerHTML = sessionStorage.getItem("sumCalories");
-	document.getElementById("SodiumDisplay").innerHTML = sessionStorage.getItem("sumSodium");
-	document.getElementById("FatDisplay").innerHTML = sessionStorage.getItem("sumFat");
+	document.getElementById("ProteinDisplay").innerHTML = sessionStorage.getItem("sumProtein") + " g";
+	document.getElementById("CarbDisplay").innerHTML = sessionStorage.getItem("sumCarbs") + " g";
+	document.getElementById("CaloriesDisplay").innerHTML = sessionStorage.getItem("sumCalories") + " g";
+	document.getElementById("SodiumDisplay").innerHTML = sessionStorage.getItem("sumSodium") + " mg";
+	document.getElementById("FatDisplay").innerHTML = sessionStorage.getItem("sumFat") + " g";
 	
 	//the price
 	document.getElementById("PriceDisplay").innerHTML = sessionStorage.getItem("sumPrice");
