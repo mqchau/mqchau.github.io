@@ -145,6 +145,19 @@ function initialize() {
 				stylers: [
 				  { visibility: 'off' }
 				]
+			  },{
+				featureType: "road",
+				elementType: "geometry",
+				stylers: [
+				  { lightness: 100 },
+				  { visibility: "simplified" }
+				]
+			  },{
+				featureType: "road",
+				elementType: "labels",
+				stylers: [
+				  { visibility: "on" }
+				]
 			  }
 			]
 		  });
