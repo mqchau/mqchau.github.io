@@ -47,10 +47,10 @@ function setRestaurantIcon(name){
 }
 
 
-function performSearch(new_keyword) {
-	alert(map.getBounds());
+function performSearch(new_bound, new_keyword) {
+	alert(new_bound);
 	var request = {
-	bounds: map.getBounds(),
+	bounds: new_bound,
 	keyword: new_keyword
 	};
 	service.radarSearch(request, callback);
@@ -130,6 +130,14 @@ function initialize() {
 		  //calcRoute();
 		}		
 
+//distance of how far you should walk to burn off the calculated calories
+function degree(calories) {
+	var dist = calories / 72.61; //miles
+	dist = dist * 1.61;          //kilometers
+	var degree = Math.asin(2/dist)
+	return degree;
+}		
+		
 function populateResultPage(){
 
 	initialize();
@@ -180,10 +188,10 @@ function populateResultPage(){
 	
 	//set new bound
 	var bounds = new google.maps.LatLngBounds( new google.maps.LatLng(new_lat_low,new_long_low ), new google.maps.LatLng(new_lat_high,new_long_high ));
-	mapmap.fitBounds(bounds);
+	map.fitBounds(bounds);
 	
 	//perform the search
-	//performSearch(sessionStorage.getItem("bestRestaurant"));
+	performSearch(bounds, sessionStorage.getItem("bestRestaurant"));
 	
 	//display address
 	
