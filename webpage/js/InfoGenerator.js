@@ -6,7 +6,8 @@ function parseDatabase(request, budget)
   var resultItemList = [];
   var result = [];
 
-  var maxIndex = 0;
+  var maxIndex = -1;
+  var maxItemList = [];
   var max = 0;
 
   var sum = 0;
@@ -22,29 +23,21 @@ function parseDatabase(request, budget)
     
     criteria = [];
     prices = [];
+    itemList = [];
+    sum = 0;
         
     for(var item in json_file[restaurant])
     {
       itemList.push(item);
-      
-      if(request == "calories")
-        criteria.push(json_file[restaurant][item]["calories"]);
-      else if(request == "fat")
-        criteria.push(json_file[restaurant][item]["fat"]);
-      else if(request == "protein")
-        criteria.push(json_file[restaurant][item]["protein"]);
-      else if(request == "carbs")
-        criteria.push(json_file[restaurant][item]["carbs"]);
-      else if(request == "sodium")
-        criteria.push(json_file[restaurant][item]["sodium"]);
-      
+      criteria.push(json_file[restaurant][item][request]);
+
       prices.push(json_file[restaurant][item]["price"]);
     }
+    
     budget = Math.floor(budget*100);
     for(var i = 0; i<prices.length;i++)
-    {
       prices[i] = Math.floor(prices[i]*100);
-    }
+
     result[restaurant]= knapsack(criteria, prices, budget);
     
     for(var index in result[restaurant])
@@ -60,20 +53,22 @@ function parseDatabase(request, budget)
     }
 	
 	if(sum > max)
-      maxIndex = restaurant;	
+	{
+      sum = max;
+      maxIndex = restaurant;
+      maxItemList = resultItemList;      
+    }	
   }
   
   for(var index in result[maxIndex])
   {
-    sum += prices[index];
-    resultItemList.push(itemList[index]);
-    
     sumCalories += restaurant[itemList[index]]["calories"];
     sumFat += restaurant[itemList[index]]["fat"];
     sumProtein += restaurant[itemList[index]]["protein"];
     sumCarbs += restaurant[itemList[index]]["protein"];
     sumSodium += restaurant[itemList[index]]["sodium"];
   }
+
   
   
   sessionStorage.setItem("sumCalories", sumCalories);
@@ -82,8 +77,8 @@ function parseDatabase(request, budget)
   sessionStorage.setItem("sumCarbs", sumCarbs);
   sessionStorage.setItem("sumSodium", sumSodium);
 	
-  sessionStorage.setItem("sumPrice", sum);
-  sessionStorage.setItem("resultItemList", resultItemList);
+  sessionStorage.setItem("sumPrice", max);
+  sessionStorage.setItem("resultItemList", maxItemList);
   sessionStorage.setItem("bestRestaurant", restaurantList[maxIndex]);		//just for testing purpose. MUST CHANGE
 }
   
