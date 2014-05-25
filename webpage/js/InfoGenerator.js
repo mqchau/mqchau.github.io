@@ -45,7 +45,7 @@ function parseDatabase(request, budget)
   
     
     for(var i = 0; i<prices.length;i++)
-      prices[i] = Math.floor(prices[i]*10);
+      prices[i] = Math.ceil(prices[i]*10);
 
     result= knapsack(criteria, prices, budget);
 	
