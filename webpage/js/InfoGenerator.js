@@ -6,7 +6,7 @@ function parseDatabase(request, budget)
   var resultItemList = [];
   var result = [];
 
-  var maxIndex = -1;
+  var maxRestaurant = -1;
   var maxItemList = [];
   var max = 0;
 
@@ -24,7 +24,14 @@ function parseDatabase(request, budget)
     criteria = [];
     prices = [];
     itemList = [];
+    resultItemList = [];
     sum = 0;
+    
+    sumCalories = 0;
+    sumFat = 0;
+    sumProtein = 0;
+    sumCarbs = 0;
+    sumSodium = 0;
         
     for(var item in json_file[restaurant])
     {
@@ -38,10 +45,11 @@ function parseDatabase(request, budget)
     for(var i = 0; i<prices.length;i++)
       prices[i] = Math.floor(prices[i]*100);
 
-    result[restaurant]= knapsack(criteria, prices, budget);
+    result= knapsack(criteria, prices, budget);
     
-    for(var index in result[restaurant])
+    for(var counter in result)
     {
+      var index = result[counter];
       sum += prices[index];
       resultItemList.push(itemList[index]);
       
@@ -54,19 +62,26 @@ function parseDatabase(request, budget)
 	
 	if(sum > max)
 	{
-      sum = max;
-      maxIndex = restaurant;
+      max = sum;
+      maxRestaurant = restaurant;
       maxItemList = resultItemList;      
     }	
   }
   
-  for(var index in result[maxIndex])
+    sumCalories = 0;
+    sumFat = 0;
+    sumProtein = 0;
+    sumCarbs = 0;
+    sumSodium = 0;
+  
+  for(var index in maxItemList)
   {
-    sumCalories += restaurant[itemList[index]]["calories"];
-    sumFat += restaurant[itemList[index]]["fat"];
-    sumProtein += restaurant[itemList[index]]["protein"];
-    sumCarbs += restaurant[itemList[index]]["protein"];
-    sumSodium += restaurant[itemList[index]]["sodium"];
+    var currentItem = maxItemList[index];
+    sumCalories += json_file[maxRestaurant][currentItem]["calories"];
+    sumFat += json_file[maxRestaurant][currentItem]["fat"];
+    sumProtein += json_file[maxRestaurant][currentItem]["protein"];
+    sumCarbs += json_file[maxRestaurant][currentItem]["protein"];
+    sumSodium += json_file[maxRestaurant][currentItem]["sodium"];
   }
 
   
