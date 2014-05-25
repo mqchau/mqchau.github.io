@@ -463,7 +463,7 @@
 		
 		#intro .style2
 		{
-			font-size: 3.75em;
+			font-size: 4.5em;
 			letter-spacing: 0.075em;
 			line-height: 1.35em;
 			padding: 0em 0 0em 0;
@@ -605,11 +605,12 @@
 	#copyright
 	{
 		margin: 6em 0 0 0;
+		font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
 	}
 	
 		#copyright span
 		{
 			padding: 1.5em 4em 1.5em 4em;
 			line-height: 1em;
-			font-size: 0.8em;
+			font-size: 0.4em;
 		}
