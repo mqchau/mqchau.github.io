@@ -105,6 +105,18 @@ function doCalculation(){
 
 function loadJSON(file_name){
 	
+	for (var res in RestaurantDatabase){
+		for (var item in RestaurantDatabase[res]){
+			RestaurantDatabase[res][item]['calories'] = parseInt(RestaurantDatabase[res][item]['calories'])
+			RestaurantDatabase[res][item]['carbs'] = parseInt(RestaurantDatabase[res][item]['carbs'])
+			RestaurantDatabase[res][item]['protein'] = parseInt(RestaurantDatabase[res][item]['protein'])
+			RestaurantDatabase[res][item]['sodium'] = parseInt(RestaurantDatabase[res][item]['sodium'])
+			RestaurantDatabase[res][item]['fat'] = parseInt(RestaurantDatabase[res][item]['fat'])
+			RestaurantDatabase[res][item]['price'] = parseFloat(RestaurantDatabase[res][item]['price'])
+		}
+	
+	}
+	
 	return RestaurantDatabase;
 	//return JSON.parse(file_name);
 }
