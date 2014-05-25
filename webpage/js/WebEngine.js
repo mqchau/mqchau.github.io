@@ -14,8 +14,8 @@ var service;
 var target_address;
 
 //var geocoder = new google.maps.Geocoder();
-var current_lat = 33.683947;
-var current_long = -117.7946941;
+var current_lat = 33.698154;
+var current_long = -117.846688;
 
 function supports_html5_storage() {
   try {
@@ -51,9 +51,13 @@ function setRestaurantIcon(name){
 
 
 function performSearch(new_bound, new_keyword) {
-	//alert(new_bound);
+	var temp = (sessionStorage.getItem("sumCalories") / 72.0 * 1.61)
+	temp = Math.floor(temp) * 1000;
+	//alert(temp);
 	var request = {
-	bounds: new_bound,
+	//bounds: new_bound,
+	location: new google.maps.LatLng(current_lat, current_long),
+	radius: temp,
 	keyword: new_keyword
 	};
 	service.radarSearch(request, callback);
@@ -88,20 +92,19 @@ function createMarker(place) {
 
 		  service.getDetails(place, function(result, status) {
 			  if (status != google.maps.places.PlacesServiceStatus.OK) {
-				alert(status);
+				//alert(status);
 				return;
 			  }
 			  //alert("1   "+ result.formatted_address);
-			  
-			  calcRoute(result.geometry.location);
+			calcRoute(result.geometry.location);
 			  //codeAddress(result.formatted_address);
-			}
+			}//
 		)
 		  
 		  google.maps.event.addListener(marker, 'click', function() {
 			service.getDetails(place, function(result, status) {
 			  if (status != google.maps.places.PlacesServiceStatus.OK) {
-				alert(status);
+				//alert(status);
 				return;
 			  }
 				//sessionStorage.setItem("target_address", result.formatted_address);
@@ -195,7 +198,7 @@ function populateResultPage(){
 	//the nutritions
 	document.getElementById("ProteinDisplay").innerHTML = sessionStorage.getItem("sumProtein") + " g";
 	document.getElementById("CarbDisplay").innerHTML = sessionStorage.getItem("sumCarbs") + " g";
-	document.getElementById("CaloriesDisplay").innerHTML = sessionStorage.getItem("sumCalories") + " g";
+	document.getElementById("CaloriesDisplay").innerHTML = sessionStorage.getItem("sumCalories") + "";
 	document.getElementById("SodiumDisplay").innerHTML = sessionStorage.getItem("sumSodium") + " mg";
 	document.getElementById("FatDisplay").innerHTML = sessionStorage.getItem("sumFat") + " g";
 	
@@ -203,6 +206,32 @@ function populateResultPage(){
 	document.getElementById("PriceDisplay").innerHTML = sessionStorage.getItem("sumPrice");
 	
 	//adjust the map
+	//get current location
+	if (false) {
+	  navigator.geolocation.getCurrentPosition(function(position){
+	  
+		current_lat = position.coords.latitude;
+		current_long = position.coords.longitude;
+	  
+		populateMap();
+	  
+	  
+	  });
+	} else {
+		//alert("no navigator");
+		populateMap();
+	}	
+	
+	
+	
+	
+	
+	
+	
+	
+}
+
+function populateMap(){
 	//calculate the target coordinate
 	var lat_displacement = degree(sessionStorage.getItem("sumCalories")); //0.10;
 	var long_displacement = degree(sessionStorage.getItem("sumCalories")); 
@@ -218,14 +247,7 @@ function populateResultPage(){
 	
 	//perform the search
 	performSearch(bounds, sessionStorage.getItem("bestRestaurant"));
-	
-	
-	
-	
-	
-	
 }
-
 
 
   function codeAddress(address) {
@@ -250,15 +272,16 @@ function populateResultPage(){
 function calcRoute(target_location) {
 
   var request = {
-    origin: 'Los Angeles, CA',
+    origin: new google.maps.LatLng(current_lat, current_long),//'Los Angeles, CA',
     destination: target_location,
    // waypoints:[{location: 'Bourke, NSW'}, {location: 'Broken Hill, NSW'}],
     travelMode: google.maps.TravelMode.WALKING
   };
   directionsService.route(request, function(response, status) {
     if (status == google.maps.DirectionsStatus.OK) {
+		//alert("You'll need to walk for " + computeTotalDistance(response) + " miles");
       directionsDisplay.setDirections(response);
-	 // alert(computeTotalDistance(response));
+	  document.getElementById("DistanceDisplay").innerHTML = "You'll have to walk " + computeTotalDistance(response) + " miles to burn all calories in this meal";
     }
   });
 }
@@ -270,7 +293,7 @@ function computeTotalDistance(result) {
     total += myroute.legs[i].distance.value;
   }
   total = total / 1000.0 * 0.62;
-  total = Number(total.toFix(2));
+  total = Number(total.toFixed(2));
   return total;
  // document.getElementById('total').innerHTML = total + ' km';
 }	
