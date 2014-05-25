@@ -19,7 +19,7 @@ var service;
 function initialize() {
   map = new google.maps.Map(document.getElementById('map-canvas'), {
     center: new google.maps.LatLng(33.683947 , -117.7946941),
-    zoom: 11,
+    zoom: 7,
     styles: [
       {
         stylers: [
@@ -42,21 +42,24 @@ function initialize() {
 }
 
 function performSearch() {
+alert(map.getBounds());
   var request = {
     bounds: map.getBounds(),
-    keyword: 'McDonald\'s'
+    keyword: 'In N Out'
   };
   service.radarSearch(request, callback);
 }
 
 function callback(results, status) {
   if (status != google.maps.places.PlacesServiceStatus.OK) {
-    alert(status);
+    
     return;
   }
-  for (var i = 0, result; result = results[i]; i++) {
+  
+  createMarker(results[results.length -1]);
+  /*for (var i = 0, result; result = results[i]; i++) {
     createMarker(result);
-  }
+  } */
 }
 
 function createMarker(place) {
