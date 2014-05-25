@@ -1,0 +1,126 @@
+<!DOCTYPE HTML>
+<!--
+	Escape Velocity 2.5 by HTML5 UP
+	html5up.net | @n33co
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html style="height: 100%">
+	<head>
+		<title>Fast Food Runner</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400italic,700,900" rel="stylesheet" />
+		<!--[if lte IE 8]><script src="js/html5shiv.js"></script><link rel="stylesheet" href="css/ie8.css" /><![endif]-->
+		<script src="js/jquery.min.js"></script>
+		<script src="js/jquery.dropotron.min.js"></script>
+		<script src="js/config.js"></script>
+		<script src="js/skel.min.js"></script>
+		<script src="js/WebEngine.js"></script>
+		<script src="js/FastFoodRunner.js"></script>
+		<script src="js/InfoGenerator.js"></script>
+		<script src="database/restaurantdatabase.js"></script>
+		<!-- <script src="js/skel-panels.min.js"></script> -->
+		<noscript>
+			<link rel="stylesheet" href="css/skel-noscript.css" />
+			<link rel="stylesheet" href="css/style.css" />
+			<link rel="stylesheet" href="css/style-desktop.css" />
+			<link rel="stylesheet" href="css/new-style.css" />
+		</noscript>
+		
+		
+	</head>
+	<body class="homepage" style="background:#f0f0f0;height: 500px;" onload="AllInitialize()">
+			
+			
+			
+		<!-- Intro Wrapper -->
+			<div id="intro-wrapper" class="wrapper wrapper-style1" style="height: 45%;">
+				<div class="container">
+					<div class="row">
+						<div class="12u">
+							
+							<!-- Intro -->
+								<section id="intro">
+									<p class="style1">Making the most out of fast food.</p>
+									<p class="style2">
+										Fast Food Runner
+									</p>
+									
+								</section>
+							<!-- /Intro -->
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		<!-- /Intro Wrapper -->
+		
+		<!-- Main Wrapper -->
+			<div class="wrapper wrapper-style4" style="height:60%;">
+				<div class="title">Enter your selection here</div>
+				<div style="height:35%;">
+				
+				</div>
+				
+				<div class="container">
+					<div class="row">
+						<div class="12u">
+							
+							<!-- Main -->
+								<div id="main">
+								
+									<div class="row">
+										<div class="4u" align="center">
+											<section>
+												<h3 class="fa fa-nothing">Maximize this.</h3>
+												<select style="width:130px;height:35px;" id="Criteria">
+													  <option value="calories">Calories</option>
+													  <option value="fat">Fat</option>
+													  <option value="protein">Protein</option>
+													  <option value="carbs">Carbs</option>
+													  <option value="sodium">Sodium</option>
+													</select>
+											</section>
+										</div>
+										<div class="4u">
+											<section>
+												<h3 class="fa fa-nothing" align="center" >With this.</h3>
+												<div align="center" class="fa fa-usd">
+												<input type="text" id="budget" align="center" value="10.00">
+												</div>
+											</section>
+										</div>
+										
+										<div class="4u">
+											<div align="center">
+												<a href="#" class="button button-style3 button-big" onclick="doCalculation()">Do it.</a>
+											</div>
+										</div>
+										
+										
+									
+									</div>
+							
+									
+								</div>
+							<!-- /Main -->
+							
+						</div>
+						
+						
+					</div>
+				</div>
+			</div>
+		<!-- /Main Wrapper -->
+		
+		<div id="copyright">
+			
+				This project is coded at HackUCI 2014 by Calvin Lin, Brandon Trinh, Quan Chau, Raul Madrigal
+			
+		</div>
+
+	
+
+	</body>
+</html>
