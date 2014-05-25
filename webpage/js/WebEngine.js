@@ -108,3 +108,7 @@ function loadJSON(file_name){
 	return RestaurantDatabase;
 	//return JSON.parse(file_name);
 }
+
+function reDoEverything(){
+	window.location.href = "index.html";
+}
