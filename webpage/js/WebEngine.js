@@ -2,6 +2,14 @@
   // getter any getItem(in DOMString key);
   // setter creator void setItem(in DOMString key, in any data);
 // };
+var rendererOptions = {
+  draggable: true
+};
+var directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);
+var directionsService = new google.maps.DirectionsService();
+var map;
+var infoWindow;
+var service;
 
 function supports_html5_storage() {
   try {
@@ -70,7 +78,98 @@ function populateResultPage(){
 	
 	//the price
 	document.getElementById("PriceDisplay").innerHTML = sessionStorage.getItem("sumPrice");
+	
+	//adjust the map
+	//calculate the target coordinate
+	
+	//perform the search
+	
+	//display address
+	
+	
+	//routing
+	
+	
+	//zoom map there
+	
+	
+	
 }
+
+function performSearch() {
+	//alert(map.getBounds());
+	var request = {
+	bounds: map.getBounds(),
+	keyword: 'In N Out'
+	};
+	service.radarSearch(request, callback);
+}
+
+function callback(results, status) {
+	if (status != google.maps.places.PlacesServiceStatus.OK) {
+
+		return;
+	}	
+
+	createMarker(results[results.length -1]);
+	/*for (var i = 0, result; result = results[i]; i++) {
+	createMarker(result);
+	} */
+}
+
+function createMarker(place) {
+		  var marker = new google.maps.Marker({
+			map: map,
+			position: place.geometry.location,
+			icon: {
+			  // Star
+			  path: 'M 0,-24 6,-7 24,-7 10,4 15,21 0,11 -15,21 -10,4 -24,-7 -6,-7 z',
+			  fillColor: '#ffff00',
+			  fillOpacity: 1,
+			  scale: 1/4,
+			  strokeColor: '#bd8d2c',
+			  strokeWeight: 1
+			}
+		  });
+
+		  google.maps.event.addListener(marker, 'click', function() {
+			service.getDetails(place, function(result, status) {
+			  if (status != google.maps.places.PlacesServiceStatus.OK) {
+				alert(status);
+				return;
+			  }
+			  infoWindow.setContent(result.name);
+			  infoWindow.open(map, marker);
+			});
+		  });
+		}
+		
+		
+function calcRoute() {
+
+  var request = {
+    origin: 'Los Angeles, CA',
+    destination: 'Sacramento, CA',
+   // waypoints:[{location: 'Bourke, NSW'}, {location: 'Broken Hill, NSW'}],
+    travelMode: google.maps.TravelMode.WALKING
+  };
+  directionsService.route(request, function(response, status) {
+    if (status == google.maps.DirectionsStatus.OK) {
+      directionsDisplay.setDirections(response);
+    }
+  });
+}
+
+function computeTotalDistance(result) {
+  var total = 0;
+  var myroute = result.routes[0];
+  for (var i = 0; i < myroute.legs.length; i++) {
+    total += myroute.legs[i].distance.value;
+  }
+  total = total / 1000.0;
+  document.getElementById('total').innerHTML = total + ' km';
+}	
+
 
 function AllInitialize(){
 	//load json file
@@ -88,17 +187,6 @@ function doCalculation(){
 	if (budget > 200.0) budget = 200.0;
 	
 	parseDatabase(selection, budget);			//we're supposed to call it
-	
-	// sessionStorage.setItem("sumCalories", 2000);
-	// sessionStorage.setItem("sumFat", 12);
-	// sessionStorage.setItem("sumProtein", 56);
-	// sessionStorage.setItem("sumCarbs", 78);
-	// sessionStorage.setItem("sumSodium", 89);
-	
-	// sessionStorage.setItem("sumPrice", 586);
-	// var abc = ["Cheeseburger", "Hamburger", "Onion ring"];
-	// sessionStorage.setItem("resultItemList",abc );
-	// sessionStorage.setItem("bestRestaurant", "Carl's Jr");
 	
 	loadResultPage();
 }
