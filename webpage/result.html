@@ -33,8 +33,11 @@
 
 		function initialize() {
 		  map = new google.maps.Map(document.getElementById('map-canvas'), {
+			//find the current latitude, longtitude
+			
+			//set them to center of the map		  
 			center: new google.maps.LatLng(33.683947 , -117.7946941),
-			zoom: 7,
+			zoom: 12,
 			styles: [
 			  {
 				stylers: [
@@ -51,14 +54,14 @@
 		  });
 
 		  infoWindow = new google.maps.InfoWindow();
-		  service = new google.maps.places.PlacesService(map);
+		  service = new google.maps.pla/ces.PlacesService(map);
 
 		  google.maps.event.addListenerOnce(map, 'bounds_changed', performSearch);
 		}
 
 		
 		function performSearch() {
-			alert(map.getBounds());
+			//alert(map.getBounds());
 		  var request = {
 			bounds: map.getBounds(),
 			keyword: 'In N Out'
