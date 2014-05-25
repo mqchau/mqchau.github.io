@@ -328,9 +328,9 @@ function doCalculation(){
 		var selection = document.getElementById("Criteria").value;
 		var budget = parseFloat(document.getElementById("budget").value);	
 		
-		if (budget > 200.0) budget = 200.0;
-		else if (budget >= 1.00){ 
 		
+		if (budget >= 1.00){ 
+			if (budget > 200.0) budget = 200.0;
 			parseDatabase(selection, budget);			//we're supposed to call it
 			
 			loadResultPage();
