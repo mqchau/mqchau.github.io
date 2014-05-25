@@ -87,18 +87,18 @@ function doCalculation(){
 	
 	if (budget > 200.0) budget = 200.0;
 	
-	//parseDatabase(selection, budget);			//we're supposed to call it
+	parseDatabase(selection, budget);			//we're supposed to call it
 	
-	sessionStorage.setItem("sumCalories", 2000);
-	sessionStorage.setItem("sumFat", 12);
-	sessionStorage.setItem("sumProtein", 56);
-	sessionStorage.setItem("sumCarbs", 78);
-	sessionStorage.setItem("sumSodium", 89);
+	// sessionStorage.setItem("sumCalories", 2000);
+	// sessionStorage.setItem("sumFat", 12);
+	// sessionStorage.setItem("sumProtein", 56);
+	// sessionStorage.setItem("sumCarbs", 78);
+	// sessionStorage.setItem("sumSodium", 89);
 	
-	sessionStorage.setItem("sumPrice", 586);
-	var abc = ["Cheeseburger", "Hamburger", "Onion ring"];
-	sessionStorage.setItem("resultItemList",abc );
-	sessionStorage.setItem("bestRestaurant", "Carl's Jr");
+	// sessionStorage.setItem("sumPrice", 586);
+	// var abc = ["Cheeseburger", "Hamburger", "Onion ring"];
+	// sessionStorage.setItem("resultItemList",abc );
+	// sessionStorage.setItem("bestRestaurant", "Carl's Jr");
 	
 	loadResultPage();
 }
