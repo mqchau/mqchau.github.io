@@ -205,15 +205,15 @@
 			
 			.image.avatar48
 			{
-				width: 100px;
-				height: 100px;
+				width: 60px;
+				height: 60px;
 				//background: #f00;
 			}
 			
 				.image.avatar48 img
 				{
-					width: 48px;
-					height: 48px;
+					width: 80px;
+					height: 80px;
 				}
 
 			.image.fit
