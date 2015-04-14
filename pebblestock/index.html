@@ -1,0 +1,217 @@
+<!doctype html>
+<html class="no-js">
+  <head>
+      <script src="bower_components/jquery/dist/jquery.js"></script>
+
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+	<script src="bower_components/jquery/dist/jquery.js"></script>
+	<style>
+		#stock_name li {
+			padding-top: 5px;
+			padding-bottom: 5px;
+		}
+	</style>
+    <!-- endbuild -->
+  </head>
+  <body>
+    <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <!-- Add your site or application content here -->
+    <div class="container">
+
+            <div class="jumbotron">
+        <h1>Pebble Stock!</h1>
+        <p class="lead">
+          Help you trace the crucial change in the market!
+        </p>
+
+      </div>
+
+      <div class="row marketing">
+
+      <h4> Enter the stock code here: </h4>
+          <div role="search">
+            <div class="form-group">
+              <input  maxlength="5" type="text" class="form-control" placeholder="Stock Abbr" id="stock_title">
+            </div>
+            <button id="AddNewSymbolButton" class="btn btn-default">Submit</button>
+          </div>
+        <h4> Your Personalized watchlist: </h4>
+
+        <div class="info">
+          <ul id = "stock_name"> 
+          </ul>
+        </div>
+
+		<button id="save" class="btn btn-default">Save</button>
+      </div>
+
+      <div class="footer">
+        <p><span class="glyphicon glyphicon-heart"></span> Credit to: Quan Chau, Nick Guan, Matthew Lin and Kevin Wei at IDEA Hacks UCLA 2015. </p>
+      </div>
+    </div>
+
+    <!-- submit function -->
+    <script>
+
+		var CurrentSymbols = [];
+
+		function getQueryVariable(variable) {
+			var query = location.search.substring(1);
+			var vars = query.split('&');
+			for (var i=0;i<vars.length;i++) {
+				var pair = vars[i].split('=');
+				if (pair[0] == variable)
+					return decodeURIComponent(pair[1]);
+			}
+			return '';
+		}
+
+		function addSymbolToList(symbolIn){
+			checkStockSymbolValid2(symbolIn, function(symbol){
+				if (symbol != null){
+					CurrentSymbols.push(symbol);
+					$("#stock_name")
+						.append($("<li />").html($("<div />").addClass("title_left").html(symbol))
+						.append($("<button> </button>").addClass("delete_right btn btn-danger").html("Delete").click(function(){
+							removeSymbolFromList($(this).parent().find('.title_left').html());
+							$(this).parent().remove();
+					  })));
+				} else {
+					alert("Can't get data for stock symbol " + symbolIn);
+				}
+			});
+		}	
+
+		function removeSymbolFromList(Symbol){
+			var index = CurrentSymbols.indexOf(Symbol);
+			if (index > -1){
+				CurrentSymbols.splice(index, 1);
+			}
+		}
+
+		function getCurrentSymbols(){
+			return {"Symbols" : CurrentSymbols};
+		}
+
+		$(document).ready(function() {
+			var OldSymbols = getQueryVariable('OldSymbols').split(',');
+			for (var OldSymbolIdx in OldSymbols){
+				addSymbolToList(OldSymbols[OldSymbolIdx]);
+			}
+			$('#save').click(function() {
+				var ret = getCurrentSymbols();
+				document.location = 'pebblejs://close#' + encodeURIComponent(JSON.stringify(ret));
+			});
+			$('#AddNewSymbolButton').click(function(){
+				addSymbolToList($.trim($("#stock_title").val()));
+			});
+		});
+
+		function checkStockSymbolValid2(Symbol, callback){
+			callback(Symbol);
+		}
+
+		function checkStockSymbolValid(Symbol, callback){
+
+			var response;
+			var req = new XMLHttpRequest();
+			
+			// build the GET request
+			req.open('GET', "http://dev.markitondemand.com/Api/v2/Quote/json?" + "symbol=" + Symbol, true);
+			req.onload = function(e) {
+				if (req.readyState == 4) {
+					// 200 - HTTP OK
+					if(req.status == 200) {
+						var obj = JSON.parse(req.responseText);
+						if ("Message" in obj) {
+							var re = /^No symbol found/;
+							if (re.test(obj.Message)){
+								callback(null);   
+							} else {
+								callback(Symbol);
+							}
+						}	
+					} else {
+						callback(null);
+						console.log("Request returned error code " + req.status.toString());
+					}
+				} else callback(null);
+			};
+			req.send(null);
+		}
+
+/*
+      var i = 1;
+
+		$(document).ready(function(){
+			var response;
+			var req = new XMLHttpRequest();
+			
+			// build the GET request
+			req.open('GET', "http://mqchau.pythonanywhere.com/oldSymbols", true);
+			req.onload = function(e) {
+				if (req.readyState == 4) {
+					// 200 - HTTP OK
+					if(req.status == 200) {
+						console.log(req.responseText);
+						response = JSON.parse(req.responseText);
+						var symbols = response.symbols;
+						for (var symbol in symbols){
+							$("#stock_name")
+							  .append($("<li />").html($("<div />").addClass("title_left").html(symbol))
+							  .append($("<button> </button>").addClass("delete_right btn btn-danger").html("Delete").click(function(){
+								  $(this).parent().remove();
+
+							  })));
+						}
+					} else {
+						console.log("Request returned error code " + req.status.toString());
+					}
+				}
+				current_idx++;
+				if (current_idx == symbols.length) {
+					current_idx = 0; 
+					global_notify_idx = 0;
+					console.log("final notify list : " + JSON.stringify(notify_list));
+					notifyPebble();
+				} else fetchStockQuote(current_idx);
+				//setTimeout(fetchStockQuote, 500);
+			};
+			req.send(null);
+		});
+	 
+
+      function submitPost() {
+        var title = $("#stock_title").val();
+        var stockid = "stock"+i;
+        $("#stock_name")
+          .append($("<li />").html($("<div />").attr({class: "title_left", id: stockid}).html(title))
+          .append($("<button> </button>").attr({class: "delete_right btn btn-danger", id: stockid}).html("Delete").click(function(){
+              $(this).parent().remove();}))
+          .append($("</br> </br>"))
+          );
+        i++;
+
+      }
+
+*/
+    </script>
+
+
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+</body>
+</html>
