@@ -110,7 +110,8 @@
 		$(document).ready(function() {
 			var OldSymbols = getQueryVariable('OldSymbols').split(',');
 			for (var OldSymbolIdx in OldSymbols){
-				addSymbolToList(OldSymbols[OldSymbolIdx]);
+				if (OldSymbols[OldSymbolIdx].length > 0)
+					addSymbolToList(OldSymbols[OldSymbolIdx]);
 			}
 			$('#save').click(function() {
 				var ret = getCurrentSymbols();
