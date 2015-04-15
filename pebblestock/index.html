@@ -105,6 +105,7 @@
 		}
 
 		$(document).ready(function() {
+				console.log("Starting web page " + location.search.substring(1));
 			var OldSymbols = getQueryVariable('OldSymbols').split(',');
 			for (var OldSymbolIdx in OldSymbols){
 				if (OldSymbols[OldSymbolIdx].length > 0)
