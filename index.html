@@ -19,18 +19,35 @@
 			</div>
 		</div>
 
-		<div class="container-fluid" id="LastTotalTime">
+		<div class="container-fluid">
 			<div class="col-md-4">
-				<strong>Enter time enter last time</strong>	
+				<strong>First or Second half of month select</strong>
 			</div>
 			<div class="col-md-4">
-				<input class='form-control' type="text"></input>
+				<select class='form-control' id="MonthHalfSelect" type="text">
+					<option value="0">First half</option>	
+					<option value="1">Second half</option>	
+				</select>
 			</div>
 		</div>
 
-		<div class="container-fluid" id="DesiredTime">
+		<div class="container-fluid">
 			<div class="col-md-4">
-				<strong>Enter total amount of time this month</strong>	
+				<strong>Number of days in month</strong>
+			</div>
+			<div class="col-md-4">
+				<select class='form-control' id="MonthDaySelect" type="text">
+					<option value="28">28</option>	
+					<option value="29">29</option>	
+					<option value="30">30</option>	
+					<option value="31">31</option>	
+				</select>
+			</div>
+		</div>
+
+		<div class="container-fluid" id="LastTotalTime">
+			<div class="col-md-4">
+				<strong>Enter time enter last time</strong>	
 			</div>
 			<div class="col-md-4">
 				<input class='form-control' type="text"></input>
