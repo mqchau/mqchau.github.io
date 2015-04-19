@@ -40,29 +40,45 @@ function updateForm(){
 
 function doCalculation(){
 	try {
+		$("#ResultDiv").html("Thinking");
 		//collect data
-		var TotalTime = parseInt($("#TotalTimeInput").val());
+		var TotalTime = parseInt($("#TotalTimeInputHour").val()) * 60 + parseInt($("#TotalTimeInputMinute").val());
 		var MonthHalf = $("#MonthHalfSelect").val();
 		var PreviousTime = 0;
 		if (MonthHalf == 1){
 			//second half
-			PreviousTime = parseInt($("#LastTotalTime").val());
+			PreviousTime = parseInt($("#PreviousTimeInputHour").val()) * 60 + parseInt($("#PreviousTimeInputMinute").val());
 		}
 		var TotalDayInMonth = parseInt($("#MonthDaySelect").val());
 
 		//process data
 		var TotalTimeThisSection, NumDayThisSection;
 		if (MonthHalf == 0){
-			TotalTimeThisSection = TotalTime / TotalDayInMonth * 15;
+			TotalTimeThisSection = Math.floor(TotalTime / TotalDayInMonth * 15);
 			NumDayThisSection = 15;
 		} else {
 			TotalTimeThisSection = TotalTime - PreviousTime;
 			NumDayThisSection = TotalDayInMonth - 15;
 		}
 
-		var AverageTimeInDay = TotalTimeThisSection / NumDayThisSection;
+		var AverageTimeInDay = Math.floor(TotalTimeThisSection / NumDayThisSection);
+		
+		var FinalTimeArray = [];
+		var TotalSoFar = 0;
+		for (var i = 0; i < NumDayThisSection - 1; i++){
+			var deviation = Math.floor ((i+2)/2);
+			if (i % 2 == 0) deviation = 0 - deviation;
+			console.log(deviation);
+			var NewAmount = AverageTimeInDay + deviation;
+			FinalTimeArray.push(NewAmount);
+			TotalSoFar += NewAmount; 
+		}
 
-		//for (var i = 0; i < 
+		FinalTimeArray.push(TotalTimeThisSection - TotalSoFar);
+
+		console.log(FinalTimeArray);
+
+		displayFinalResult(FinalTimeArray, TotalTimeThisSection);
 
 	} catch (e) {
 		alert(e.message);
@@ -70,3 +86,13 @@ function doCalculation(){
 	
 }
 
+function displayFinalResult(array, total){
+	$("#ResultDiv").empty();
+	var timeobj = convertMinuteToTime(total);
+	$("#ResultDiv").append($("<p>").html("Here is the result, total " + timeobj.Hour + ":" + timeobj.Minute));
+	for (var i = 0; i < array.length; i++){
+		var timeobj = convertMinuteToTime(array[i]);
+		$("#ResultDiv").append($("<p>").html(timeobj.Hour + ":" + timeobj.Minute));
+	}	
+
+}
