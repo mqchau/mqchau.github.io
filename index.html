@@ -11,19 +11,25 @@
 
 	<body>
 		<div class="container-fluid">
-			<div class="col-md-4">
+			<div class="col-md-3">
 				<strong>Enter total time im month (should be 282)</strong>
 			</div>
-			<div class="col-md-4">
-				<input class='form-control' type="number" id="TotalTimeInput" maxlength="4"></input>
+			<div class="col-md-1">
+				<input class='form-control' type="number" id="TotalTimeInputHour" maxlength="4" size="4"></input>
+			</div>
+			<div align="center" class="col-md-1">
+				:
+			</div>
+			<div class="col-md-1">
+				<input class='form-control' type="number" id="TotalTimeInputMinute" maxlength="2" size="2"></input>
 			</div>
 		</div>
 
 		<div class="container-fluid">
-			<div class="col-md-4">
+			<div class="col-md-3">
 				<strong>First or Second half of month select</strong>
 			</div>
-			<div class="col-md-4">
+			<div class="col-md-3">
 				<select class='form-control' id="MonthHalfSelect" type="text">
 					<option value="0">First half</option>	
 					<option value="1">Second half</option>	
@@ -32,10 +38,10 @@
 		</div>
 
 		<div class="container-fluid">
-			<div class="col-md-4">
+			<div class="col-md-3">
 				<strong>Number of days in month</strong>
 			</div>
-			<div class="col-md-4">
+			<div class="col-md-3">
 				<select class='form-control' id="MonthDaySelect" type="text">
 					<option value="28">28</option>	
 					<option value="29">29</option>	
@@ -46,11 +52,17 @@
 		</div>
 
 		<div class="container-fluid" id="LastTotalTime">
-			<div class="col-md-4">
-				<strong>Enter time enter last time</strong>	
+			<div class="col-md-3">
+				<strong>Enter time enter last time</strong>
 			</div>
-			<div class="col-md-4">
-				<input class='form-control' type="number"></input>
+			<div class="col-md-1">
+				<input class='form-control' type="number" id="PreviousTimeInputHour" maxlength="4" size="4"></input>
+			</div>
+			<div align="center" class="col-md-1">
+				:
+			</div>
+			<div class="col-md-1">
+				<input class='form-control' type="number" id="PreviousTimeInputMinute" maxlength="2" size="2"></input>
 			</div>
 		</div>
 
