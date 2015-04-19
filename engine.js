@@ -6,6 +6,39 @@ $(document).ready(function(){
 	$("#TotalTimeInputHour").val(DefaultTotalMonthTime.Hour);
 	$("#TotalTimeInputMinute").val(DefaultTotalMonthTime.Minute);
 
+	//detect the half of month and number of day in month
+	var CurrentTime = new Date();
+	if (CurrentTime.getDate() <= 15){
+		$("#MonthHalfSelect").val("0");
+	} else {
+		$("#MonthHalfSelect").val("1");
+	}
+	switch(CurrentTime.getMonth()){
+		case 0:
+		case 2:
+		case 4:
+		case 6:
+		case 8:
+		case 10:
+			//jan, march...
+			$("#MonthDaySelect").val("31");
+			break;
+		case 1:
+			//february
+			if ((CurrentTime.getYear() + 1900) % 4 == 0){
+				//leap year
+				$("#MonthDaySelect").val("29");
+			} else {
+				//not leap year
+				$("#MonthDaySelect").val("28");
+
+			}
+			break;
+		default:
+			$("#MonthDaySelect").val("30");
+			break;
+	}
+
 	//try to get the current date, time and set it to first or 2nd half of the month
 	updateForm();
 
