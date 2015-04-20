@@ -2,6 +2,7 @@ var DefaultTotalMonthMinute = 282 * 60;
 
 $(document).ready(function(){
 	$("#ResultDiv").hide();
+	$("#DateTimeSelect").datepicker();
 	
 	//update the total time of month
 	var DefaultTotalMonthTime = convertMinuteToTime(DefaultTotalMonthMinute);
@@ -10,12 +11,21 @@ $(document).ready(function(){
 
 	//detect the half of month and number of day in month
 	var CurrentTime = new Date();
-	if (CurrentTime.getDate() <= 15){
-		$("#MonthHalfSelect").val("0");
-	} else {
-		$("#MonthHalfSelect").val("1");
-	}
-	switch(CurrentTime.getMonth()){
+
+	//set current date to the datetimeselect box
+	$("#DateTimeSelect").val((CurrentTime.getMonth() + 1).toString() + "/" + CurrentTime.getDate().toString() + "/" + CurrentTime.getFullYear().toString());
+
+	//try to get the current date, time and set it to first or 2nd half of the month
+	updateForm();
+
+	//assign callback to the button
+	$("#CalculateButton").click(doCalculation);
+	$("#DateTimeSelect").change(updateForm);
+});
+
+function getNumDayInMonth(MonthIndex){
+
+	switch(MonthIndex){
 		case 0:
 		case 2:
 		case 4:
@@ -23,31 +33,23 @@ $(document).ready(function(){
 		case 8:
 		case 10:
 			//jan, march...
-			$("#MonthDaySelect").val("31");
+			return 31;
 			break;
 		case 1:
 			//february
 			if ((CurrentTime.getFullYear()) % 4 == 0){
 				//leap year
-				$("#MonthDaySelect").val("29");
+				return 29;
 			} else {
 				//not leap year
-				$("#MonthDaySelect").val("28");
-
+				return 28;
 			}
 			break;
 		default:
-			$("#MonthDaySelect").val("30");
+			return 30;
 			break;
 	}
-
-	//try to get the current date, time and set it to first or 2nd half of the month
-	updateForm();
-
-	//assign callback to the button
-	$("#CalculateButton").click(doCalculation);
-	$("#MonthHalfSelect").change(updateForm);
-});
+}
 
 function convertMinuteToTime(minute){
 	return {
@@ -76,9 +78,16 @@ function paddedZero(number){
 	else return number.toString();
 }
 
+function convertDateStrintToDate(string){
+	var splitted = string.split('/');
+	return new Date(parseInt(splitted[2]), parseInt(splitted[0]), parseInt(splitted[1]));
+}
+
 function updateForm(){
+	var SelectedDate = convertDateStrintToDate($("#DateTimeSelect").val());
 	//based on whether this is first half or second half of the month, decide to ask the number of time last time
-	if($("#MonthHalfSelect").val() == 0){
+	
+	if(SelectedDate.getDate() <= 15){
 		//first half
 		$("#LastTotalTime").hide();
 	} else {
@@ -90,16 +99,16 @@ function updateForm(){
 
 function doCalculation(){
 	try {
-		//$("#ResultDiv").html("Thinking");
+		var SelectedDate = convertDateStrintToDate($("#DateTimeSelect").val());
 		//collect data
 		var TotalTime = parseInt($("#TotalTimeInputHour").val()) * 60 + parseInt($("#TotalTimeInputMinute").val());
-		var MonthHalf = $("#MonthHalfSelect").val();
+		var MonthHalf = (SelectedDate.getDate() <= 15) ? 0 : 1;
 		var PreviousTime = 0;
 		if (MonthHalf == 1){
 			//second half
 			PreviousTime = parseInt($("#PreviousTimeInputHour").val()) * 60 + parseInt($("#PreviousTimeInputMinute").val());
 		}
-		var TotalDayInMonth = parseInt($("#MonthDaySelect").val());
+		var TotalDayInMonth = getNumDayInMonth(SelectedDate.getMonth()); 
 
 		//process data
 		var TotalTimeThisSection, NumDayThisSection;

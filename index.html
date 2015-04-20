@@ -7,6 +7,9 @@
 		<link rel="stylesheet" href="style.css">
 		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 		<script src="engine.js"></script>
+		<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
+		<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 	</head>
 
 	<body>
@@ -27,27 +30,10 @@
 
 		<div class="container-fluid">
 			<div class="col-md-3">
-				<strong>First or Second half of month select</strong>
+				<strong>Date and Time to calculate</strong>
 			</div>
 			<div class="col-md-3">
-				<select class='form-control' id="MonthHalfSelect" type="text">
-					<option value="0">First half</option>	
-					<option value="1">Second half</option>	
-				</select>
-			</div>
-		</div>
-
-		<div class="container-fluid">
-			<div class="col-md-3">
-				<strong>Number of days in month</strong>
-			</div>
-			<div class="col-md-3">
-				<select class='form-control' id="MonthDaySelect" type="text">
-					<option value="28">28</option>	
-					<option value="29">29</option>	
-					<option value="30">30</option>	
-					<option value="31">31</option>	
-				</select>
+				<input type="text" id="DateTimeSelect"></input>
 			</div>
 		</div>
 
