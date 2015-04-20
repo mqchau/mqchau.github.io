@@ -1,6 +1,8 @@
 var DefaultTotalMonthMinute = 282 * 60;
 
 $(document).ready(function(){
+	$("#ResultDiv").hide();
+	
 	//update the total time of month
 	var DefaultTotalMonthTime = convertMinuteToTime(DefaultTotalMonthMinute);
 	$("#TotalTimeInputHour").val(DefaultTotalMonthTime.Hour);
@@ -54,6 +56,12 @@ function convertMinuteToTime(minute){
 	}
 }
 
+function convertMinuteToTimeString(minute){
+	if (minute == null) return "Not working";
+	var converted = convertMinuteToTime(minute);
+	return converted.Hour.toString() + ":" + converted.Minute.toString();
+}
+
 function paddedZero(number){
 	if (number < 10) return "0" + number.toString();
 	else return number.toString();
@@ -73,7 +81,7 @@ function updateForm(){
 
 function doCalculation(){
 	try {
-		$("#ResultDiv").html("Thinking");
+		//$("#ResultDiv").html("Thinking");
 		//collect data
 		var TotalTime = parseInt($("#TotalTimeInputHour").val()) * 60 + parseInt($("#TotalTimeInputMinute").val());
 		var MonthHalf = $("#MonthHalfSelect").val();
@@ -108,9 +116,9 @@ function doCalculation(){
 
 		FinalTimeArray.push(TotalTimeThisSection - TotalSoFar);
 
-		divideFinalTimeArray(FinalTimeArray);
+		var DividedTimeArray = divideFinalTimeArray(FinalTimeArray);
 
-		displayFinalResult(FinalTimeArray, TotalTimeThisSection);
+		displayFinalResult(DividedTimeArray, TotalTimeThisSection);
 
 	} catch (e) {
 		alert(e.message);
@@ -119,14 +127,20 @@ function doCalculation(){
 }
 
 function displayFinalResult(array, total){
-	$("#ResultDiv").empty();
-	var timeobj = convertMinuteToTime(total);
-	$("#ResultDiv").append($("<p>").html("Here is the result, total " + timeobj.Hour + ":" + timeobj.Minute));
-	for (var i = 0; i < array.length; i++){
-		var timeobj = convertMinuteToTime(array[i]);
-		$("#ResultDiv").append($("<p>").html(timeobj.Hour + ":" + timeobj.Minute));
+	$("#ResultDiv").show();
+	$("#TotalWorkTimeDisplay").html(convertMinuteToTimeString(total));
+	$("#ResultTable tbody").empty();
+	for (var i = 0 ; i < 7; i++){
+		var NewRow = $("<tr>").append($("<td>").html(array[i].MonthValue.toString() + "/" + array[i].DateValue.toString()));
+		NewRow = $(NewRow).append($("<td>").html(convertMinuteToTimeString(array[i].Value)));
+		NewRow = $(NewRow).append($("<td>").html(array[i+7].MonthValue.toString() + "/" + array[i+7].DateValue.toString()));
+		NewRow = $(NewRow).append($("<td>").html(convertMinuteToTimeString(array[i+7].Value)));
+		NewRow = $(NewRow).append($("<td>").html(array[i+14].MonthValue.toString() + "/" + array[i+14].DateValue.toString()));
+		NewRow = $(NewRow).append($("<td>").html(convertMinuteToTimeString(array[i+14].Value)));
+		//NewRow = $(NewRow).append($("<td>").html(array[i+21].MonthValue.toString() + "/" + array[i+21].DateValue.toString()));
+		//NewRow = $(NewRow).append($("<td>").html(convertMinuteToTimeString(array[i+21].Value)));
+		$("#ResultTable tbody").append(NewRow);	
 	}	
-
 }
 
 function divideFinalTimeArray(TimeArray){
