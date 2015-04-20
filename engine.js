@@ -23,7 +23,7 @@ $(document).ready(function(){
 	$("#DateTimeSelect").change(updateForm);
 });
 
-function getNumDayInMonth(MonthIndex){
+function getNumDayInMonth(MonthIndex, FullYear){
 
 	switch(MonthIndex){
 		case 0:
@@ -37,7 +37,7 @@ function getNumDayInMonth(MonthIndex){
 			break;
 		case 1:
 			//february
-			if ((CurrentTime.getFullYear()) % 4 == 0){
+			if ((FullYear) % 4 == 0){
 				//leap year
 				return 29;
 			} else {
@@ -80,7 +80,7 @@ function paddedZero(number){
 
 function convertDateStrintToDate(string){
 	var splitted = string.split('/');
-	return new Date(parseInt(splitted[2]), parseInt(splitted[0]), parseInt(splitted[1]));
+	return new Date(parseInt(splitted[2]), parseInt(splitted[0]) - 1, parseInt(splitted[1]));
 }
 
 function updateForm(){
@@ -108,7 +108,7 @@ function doCalculation(){
 			//second half
 			PreviousTime = parseInt($("#PreviousTimeInputHour").val()) * 60 + parseInt($("#PreviousTimeInputMinute").val());
 		}
-		var TotalDayInMonth = getNumDayInMonth(SelectedDate.getMonth()); 
+		var TotalDayInMonth = getNumDayInMonth(SelectedDate.getMonth(), SelectedDate.getFullYear()); 
 
 		//process data
 		var TotalTimeThisSection, NumDayThisSection;
@@ -174,66 +174,74 @@ function divideFinalTimeArray(TimeArray){
 	var DividedTimeArray = [];
 	
 	//find current date
-	var CurrentTime = new Date();
+	var CurrentTime = convertDateStrintToDate($("#DateTimeSelect").val());
+	var StartDateInMonth = 0;
 	if (CurrentTime.getDate() >= 15){
-		var StartDateThisSection = new Date();
-		StartDateThisSection.setFullYear(CurrentTime.getFullYear(),CurrentTime.getMonth(), 16); 
-		console.log("Start Working Date = " + StartDateThisSection.toString());
-		//padd with previous date to make full week
-		for (var i = StartDateThisSection.getDay(); i > 0; i--){
-			var VoidDate = new Date(StartDateThisSection);
-			VoidDate.setDate(StartDateThisSection.getDate() - i);
+		StartDateInMonth = 16;
+	} else {
+		StartDateInMonth = 1;
+	}
+
+	var StartDateThisSection = new Date();
+	StartDateThisSection.setFullYear(CurrentTime.getFullYear(),CurrentTime.getMonth(), StartDateInMonth); 
+	console.log("Start Working Date = " + StartDateThisSection.toString());
+	//padd with previous date to make full week
+	for (var i = StartDateThisSection.getDay(); i > 0; i--){
+		var VoidDate = new Date(StartDateThisSection);
+		VoidDate.setDate(StartDateThisSection.getDate() - i);
+		DividedTimeArray.push({
+			DateValue: VoidDate.getDate(),
+			MonthValue: VoidDate.getMonth() + 1,
+			Value: null
+		});
+	}
+
+	//start going with the calculated section
+	var FinalWorkDate = null;
+	for (var i = 0; i < TimeArray.length; i++){
+		var WorkDate = new Date(StartDateThisSection);
+		WorkDate.setDate(StartDateThisSection.getDate() + i);
+		DividedTimeArray.push({
+			DateValue: WorkDate.getDate(),
+			MonthValue: WorkDate.getMonth() + 1,
+			Value: TimeArray[i]
+		});
+		FinalWorkDate = WorkDate;
+	}
+	
+	console.log("final workdate = " + FinalWorkDate.toString());
+	//padd with later date to make full week
+	var FinalPaddedDate = FinalWorkDate;
+	if (FinalWorkDate.getDay() < 6) {
+		//not saturday
+		for (var i = 1 ; i <= 6 - FinalWorkDate.getDay(); i++){
+			var VoidDate = new Date(FinalWorkDate);
+			VoidDate.setDate(FinalWorkDate.getDate() + i);
+			//console.log(VoidDate.toString());
 			DividedTimeArray.push({
 				DateValue: VoidDate.getDate(),
 				MonthValue: VoidDate.getMonth() + 1,
 				Value: null
 			});
 		}
+		FinalPaddedDate = VoidDate;
+	}
 
-		//start going with the calculated section
-		var FinalWorkDate = null;
-		for (var i = 0; i < TimeArray.length; i++){
-			var WorkDate = new Date(StartDateThisSection);
-			WorkDate.setDate(StartDateThisSection.getDate() + i);
+	//maybe padd whole week just to make whole 4 weeks
+	if (DividedTimeArray.length < 28){
+		var i = 0;
+		while (DividedTimeArray.length < 28){
+			var VoidDate = new Date(FinalPaddedDate);
+			VoidDate.setDate(FinalPaddedDate.getDate() + i + 1);
 			DividedTimeArray.push({
-				DateValue: WorkDate.getDate(),
-				MonthValue: WorkDate.getMonth() + 1,
-				Value: TimeArray[i]
+				DateValue: VoidDate.getDate(),
+				MonthValue: VoidDate.getMonth() + 1,
+				Value: null
 			});
-			FinalWorkDate = WorkDate;
-		}
-		
-		console.log("final workdate = " + FinalWorkDate.toString());
-		//padd with later date to make full week
-		var FinalPaddedDate = null;
-		if (FinalWorkDate.getDay() < 6) {
-			//not saturday
-			for (var i = 1 ; i <= 6 - FinalWorkDate.getDay(); i++){
-				var VoidDate = new Date(FinalWorkDate);
-				VoidDate.setDate(FinalWorkDate.getDate() + i);
-				//console.log(VoidDate.toString());
-				DividedTimeArray.push({
-					DateValue: VoidDate.getDate(),
-					MonthValue: VoidDate.getMonth() + 1,
-					Value: null
-				});
-			}
-			FinalPaddedDate = VoidDate;
-		}
-
-		//maybe padd whole week just to make whole 4 weeks
-		if (DividedTimeArray.length < 28){
-			for (var i = 0; i < 7; i++){
-				var VoidDate = new Date(FinalPaddedDate);
-				VoidDate.setDate(FinalPaddedDate.getDate() + i);
-				DividedTimeArray.push({
-					DateValue: VoidDate.getDate(),
-					MonthValue: VoidDate.getMonth() + 1,
-					Value: null
-				});
-			}
+			i++;
 		}
 	}
+	
 
 	return DividedTimeArray;
 }
