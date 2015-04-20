@@ -56,6 +56,15 @@ function convertMinuteToTime(minute){
 	}
 }
 
+function sumMinute(timeobjarr){
+	var total = 0;
+	for (var i = 0; i < timeobjarr.length; i++){
+		if (timeobjarr[i].Value != null)
+			total += timeobjarr[i].Value;
+	}
+	return total;
+}
+
 function convertMinuteToTimeString(minute){
 	if (minute == null) return "Not working";
 	var converted = convertMinuteToTime(minute);
@@ -137,10 +146,19 @@ function displayFinalResult(array, total){
 		NewRow = $(NewRow).append($("<td>").html(convertMinuteToTimeString(array[i+7].Value)));
 		NewRow = $(NewRow).append($("<td>").html(array[i+14].MonthValue.toString() + "/" + array[i+14].DateValue.toString()));
 		NewRow = $(NewRow).append($("<td>").html(convertMinuteToTimeString(array[i+14].Value)));
-		//NewRow = $(NewRow).append($("<td>").html(array[i+21].MonthValue.toString() + "/" + array[i+21].DateValue.toString()));
-		//NewRow = $(NewRow).append($("<td>").html(convertMinuteToTimeString(array[i+21].Value)));
+		NewRow = $(NewRow).append($("<td>").html(array[i+21].MonthValue.toString() + "/" + array[i+21].DateValue.toString()));
+		NewRow = $(NewRow).append($("<td>").html(convertMinuteToTimeString(array[i+21].Value)));
 		$("#ResultTable tbody").append(NewRow);	
 	}	
+	var NewRow = $("<tr>").append($("<td>").append($("<u>").html("Week Total")));
+	NewRow = $(NewRow).append($("<td>").html(convertMinuteToTimeString(sumMinute(array.slice(0,7)))));
+	NewRow = $(NewRow).append($("<td>").append($("<u>").html("Week Total")));
+	NewRow = $(NewRow).append($("<td>").html(convertMinuteToTimeString(sumMinute(array.slice(7,14)))));
+	NewRow = $(NewRow).append($("<td>").append($("<u>").html("Week Total")));
+	NewRow = $(NewRow).append($("<td>").html(convertMinuteToTimeString(sumMinute(array.slice(14,21)))));
+	NewRow = $(NewRow).append($("<td>").append($("<u>").html("Week Total")));
+	NewRow = $(NewRow).append($("<td>").html(convertMinuteToTimeString(sumMinute(array.slice(21,28)))));
+	$("#ResultTable tbody").append(NewRow);	
 }
 
 function divideFinalTimeArray(TimeArray){
@@ -178,12 +196,27 @@ function divideFinalTimeArray(TimeArray){
 		
 		console.log("final workdate = " + FinalWorkDate.toString());
 		//padd with later date to make full week
+		var FinalPaddedDate = null;
 		if (FinalWorkDate.getDay() < 6) {
 			//not saturday
 			for (var i = 1 ; i <= 6 - FinalWorkDate.getDay(); i++){
 				var VoidDate = new Date(FinalWorkDate);
 				VoidDate.setDate(FinalWorkDate.getDate() + i);
 				//console.log(VoidDate.toString());
+				DividedTimeArray.push({
+					DateValue: VoidDate.getDate(),
+					MonthValue: VoidDate.getMonth() + 1,
+					Value: null
+				});
+			}
+			FinalPaddedDate = VoidDate;
+		}
+
+		//maybe padd whole week just to make whole 4 weeks
+		if (DividedTimeArray.length < 28){
+			for (var i = 0; i < 7; i++){
+				var VoidDate = new Date(FinalPaddedDate);
+				VoidDate.setDate(FinalPaddedDate.getDate() + i);
 				DividedTimeArray.push({
 					DateValue: VoidDate.getDate(),
 					MonthValue: VoidDate.getMonth() + 1,
