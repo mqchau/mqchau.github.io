@@ -30,8 +30,9 @@ function getNumDayInMonth(MonthIndex, FullYear){
 		case 2:
 		case 4:
 		case 6:
-		case 8:
-		case 10:
+		case 7:
+		case 9:
+		case 11:
 			//jan, march...
 			return 31;
 			break;
